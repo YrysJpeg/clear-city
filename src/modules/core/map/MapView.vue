@@ -29,7 +29,7 @@ export default {
       minZoom: 10,
       fullscreenControl: false,
     });
-    DG.marker([49.944428 ,82.623576], {}).addTo(this.map);
+    DG.marker([49.944428, 82.623576], {}).addTo(this.map);
   },
   beforeDestroy() {
     if (this.map) this.map.remove();

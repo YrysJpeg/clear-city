@@ -7,8 +7,9 @@
           class="close"
           src="../../../assets/img/close-imgsvg.svg"
           alt=""
+          @click="deleteImg(index)"
         />
-        <img @click="deleteImg(index)" class="inner" :src="item" alt="" />
+        <img class="inner" :src="item" alt="" />
       </div>
     </div>
     <label for="file" @drop="onFileChange">
@@ -47,9 +48,12 @@ export default {
         reader.readAsDataURL(files[i]);
       }
       this.images = fileArr;
+
+      this.$emit("image", this.images);
     },
     deleteImg(index) {
       this.images.splice(index, 1);
+      this.$emit("image", this.images);
     },
   },
 };
@@ -101,6 +105,7 @@ export default {
 
     img {
       text-align: left !important;
+      object-fit: cover;
     }
 
     .inner {
@@ -113,7 +118,7 @@ export default {
       position: absolute;
       right: -5px;
       top: -5px;
-      z-index: 0;
+      z-index: 1;
     }
   }
 }

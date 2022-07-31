@@ -2,20 +2,19 @@
   <form action="#" class="my-account-form notranslate">
     <h3>{{ $t("account.personal-data") }}</h3>
     <div class="label-wrap">
-      <img src="../../../assets/img/pen.svg" alt="">
+      <img src="../../../assets/img/pen.svg" alt="" />
       <label class="pen" for="name">{{ $t("forms.name") }}</label>
       <input id="name" type="text" />
     </div>
-    
+
     <div class="label-wrap">
-      <img src="../../../assets/img/pen.svg" alt="">
+      <img src="../../../assets/img/pen.svg" alt="" />
       <label class="pen" for="surname">{{ $t("forms.lastname") }}</label>
       <input id="surname" type="text" />
     </div>
-    
 
     <div class="label-wrap">
-      <img src="../../../assets/img/pen.svg" alt="">
+      <img src="../../../assets/img/pen.svg" alt="" />
       <label class="pen" for="date">{{ $t("forms.birthday") }}</label>
       <input id="date" type="date" v-model="date" />
     </div>
@@ -30,19 +29,19 @@
     </div>
 
     <div class="label-wrap">
-      <img src="../../../assets/img/pen.svg" alt="">
+      <img src="../../../assets/img/pen.svg" alt="" />
       <label class="pen" for="email">{{ $t("forms.email") }}</label>
       <input id="email" type="email" />
     </div>
 
     <div class="label-wrap">
-      <img src="../../../assets/img/pen.svg" alt="">
+      <img src="../../../assets/img/pen.svg" alt="" />
       <label class="pen" for="tel">{{ $t("forms.phone") }}</label>
       <input id="tel" type="tel" />
     </div>
 
     <div class="label-wrap">
-      <img src="../../../assets/img/pen.svg" alt="">
+      <img src="../../../assets/img/pen.svg" alt="" />
       <label class="pen" for="password">{{ $t("forms.pass") }}</label>
       <input id="password" type="password" />
     </div>

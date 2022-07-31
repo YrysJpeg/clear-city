@@ -25,13 +25,13 @@
             </li>
             <div class="header-mobile">
               <div class="header-lang">
-                <div @click="changeLang('kk')" class="notranslate" to>{{
-                  $t("header.kk")
-                }}</div>
+                <div @click="changeLang('kk')" class="notranslate" to>
+                  {{ $t("header.kk") }}
+                </div>
                 <span>|</span>
-                <div @click="changeLang('ru')" class="notranslate" to>{{
-                  $t("header.ru")
-                }}</div>
+                <div @click="changeLang('ru')" class="notranslate" to>
+                  {{ $t("header.ru") }}
+                </div>
               </div>
               <div @click="menuState = false">
                 <router-link to class="header-auth notranslate">{{
@@ -52,9 +52,12 @@
             {{ $t("header.ru") }}
           </div>
         </div>
-        <router-link @click="menuState = false" to class="header-auth notranslate">{{
-          $t("header.login")
-        }}</router-link>
+        <router-link
+          @click.native="openModal"
+          to
+          class="header-auth notranslate"
+          >{{ $t("header.login") }}</router-link
+        >
       </div>
       <Translator v-show="false" />
       <div class="gam" @click="menuState = !menuState">
@@ -83,6 +86,10 @@ export default {
     };
   },
   methods: {
+    openModal() {
+      this.menuState = false;
+      this.$store.dispatch("authForm", true);
+    },
     changeLang(event) {
       localStorage.setItem("lang", event);
       if (event == "ru") setCookie("googtrans", "/ru/ru");

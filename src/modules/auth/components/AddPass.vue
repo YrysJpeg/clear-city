@@ -29,8 +29,12 @@
           />
         </button>
       </div>
-      <button class="pass-login" :disabled="pass !== passRepeat">Войти</button>
-      <button class="edit-data">{{ $t("forms.add-data") }}</button>
+      <button @click="login" class="pass-login" :disabled="pass !== passRepeat">
+        Войти
+      </button>
+      <button @click="persData" class="edit-data">
+        {{ $t("forms.add-data") }}
+      </button>
     </div>
   </div>
 </template>
@@ -44,6 +48,15 @@ export default {
       passRepeat: "",
       passRepeatState: true,
     };
+  },
+  methods: {
+    login() {
+      this.$store.dispatch("authForm", false);
+      this.$store.dispatch("authStepAdd", "login");
+    },
+    persData() {
+      this.$store.dispatch("authStepAdd", "ind");
+    },
   },
 };
 </script>

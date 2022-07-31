@@ -9,6 +9,7 @@
             Сервис созданный для улучшения экологии города и предотвращения
             загрязнении.
           </p>
+          Сортировать
           <button class="notranslate" @click="close">
             {{ $t("main.create-events") }}
           </button>

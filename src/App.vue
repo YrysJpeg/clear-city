@@ -26,7 +26,7 @@ export default {
   box-sizing: border-box;
 }
 .v-picker__title {
-  background: #11AE55 !important;
+  background: #11ae55 !important;
   padding: 0 !important;
 }
 .v-time-picker-title {
@@ -37,7 +37,7 @@ export default {
 .v-time-picker-title {
   justify-content: center !important;
   height: initial !important;
-  font-family: 'Roboto';
+  font-family: "Roboto";
 }
 .v-picker__title__btn {
   font-size: 24px !important;
@@ -50,47 +50,55 @@ export default {
 .theme--light.v-time-picker-clock {
   background: #fff !important;
 }
-.theme--light.v-time-picker-clock--indeterminate .v-time-picker-clock__item--active, .theme--light.v-time-picker-clock--indeterminate .v-time-picker-clock__hand, .v-time-picker-clock__hand, .v-time-picker-clock__item--active {
-  background: #11AE55 !important;
+.theme--light.v-time-picker-clock--indeterminate
+  .v-time-picker-clock__item--active,
+.theme--light.v-time-picker-clock--indeterminate .v-time-picker-clock__hand,
+.v-time-picker-clock__hand,
+.v-time-picker-clock__item--active {
+  background: #11ae55 !important;
 }
 .v-time-picker-clock__container {
-  font-family: 'Roboto' !important;
+  font-family: "Roboto" !important;
 }
 .v-date-picker-header {
-  background: #F4F4F4;
+  background: #f4f4f4;
 }
-.v-btn--fab.v-size--default .v-icon, .v-btn--fab.v-size--small .v-icon, .v-btn--icon.v-size--default .v-icon, .v-btn--icon.v-size--small .v-icon {
-    height: 24px;
-    font-size: 24px;
-    width: 24px;
-    background: #11ae5564;
-    border-radius: 50%;
+.v-btn--fab.v-size--default .v-icon,
+.v-btn--fab.v-size--small .v-icon,
+.v-btn--icon.v-size--default .v-icon,
+.v-btn--icon.v-size--small .v-icon {
+  height: 24px;
+  font-size: 24px;
+  width: 24px;
+  background: #11ae5564;
+  border-radius: 50%;
 }
 .v-date-picker-title__date {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-weight: 700;
   font-size: 14px !important;
-  font-feature-settings: 'tnum' on, 'lnum' on;
-  color: #FFFFFF;
+  font-feature-settings: "tnum" on, "lnum" on;
+  color: #ffffff;
   padding-left: 20px;
   padding-bottom: 20px !important;
 }
 .v-picker__body {
-  font-family: 'Roboto';
+  font-family: "Roboto";
 }
-.v-card>.v-card__progress+:not(.v-btn):not(.v-chip):not(.v-avatar), .v-card>:first-child:not(.v-btn):not(.v-chip):not(.v-avatar) {
-    border-top-left-radius: none !important; 
-    border-top-right-radius: none !important; 
+.v-card > .v-card__progress + :not(.v-btn):not(.v-chip):not(.v-avatar),
+.v-card > :first-child:not(.v-btn):not(.v-chip):not(.v-avatar) {
+  border-top-left-radius: none !important;
+  border-top-right-radius: none !important;
 }
 .theme--light.v-date-picker-table th {
-  color: #11AE55 !important;
+  color: #11ae55 !important;
 }
 .v-date-picker-title__year {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-weight: 700;
   font-size: 12px !important;
-  font-feature-settings: 'tnum' on, 'lnum' on;
-  color: #FFFFFF;
+  font-feature-settings: "tnum" on, "lnum" on;
+  color: #ffffff;
   padding-left: 20px;
   padding-top: 10px;
 }
@@ -144,6 +152,10 @@ textarea {
     padding-right: 10px;
   }
 }
+body {
+  top: 0 !important;
+}
+
 .skiptranslate,
 #goog-gt-tt,
 .goog-te-spinner-pos {

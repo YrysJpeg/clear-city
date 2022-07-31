@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'active-menu': menuState}" class="bar">
+  <div :class="{ 'active-menu': menuState }" class="bar">
     <aside class="my-account-bar notranslate">
       <section class="my-account-user">
         <img src="../../../assets/img/telka.png" alt="" />
@@ -16,8 +16,12 @@
         </ul>
       </nav>
     </aside>
-    <div :class="{'show-menu__active': menuState}" class="show-menu" @click="menuState = !menuState">
-      <img src="../../../assets/img/arrow.png" alt="">
+    <div
+      :class="{ 'show-menu__active': menuState }"
+      class="show-menu"
+      @click="menuState = !menuState"
+    >
+      <img src="../../../assets/img/arrow.png" alt="" />
     </div>
   </div>
 </template>
@@ -26,9 +30,9 @@
 export default {
   data() {
     return {
-      menuState: false
-    }
-  }
+      menuState: false,
+    };
+  },
 };
 </script>
 
@@ -47,13 +51,13 @@ export default {
   justify-content: center;
   align-items: center;
   transform: rotate(-180deg);
-  transition: .5s;
+  transition: 0.5s;
 }
 .show-menu__active {
   transform: rotate(0deg);
 }
 .active-menu {
   margin-left: 0% !important;
-  transition: .5s;
+  transition: 0.5s;
 }
 </style>

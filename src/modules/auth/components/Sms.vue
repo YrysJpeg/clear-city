@@ -13,10 +13,10 @@
         <div class="number">{{ number[3] }}</div>
       </label>
       <input id="code" type="text" v-model="number" maxlength="4" />
-      <h5>
+      <h5 @click="smsRepeat">
         {{ $t("forms.sms-timeout") }} <span>{{ $t("forms.sms-repeat") }}</span>
       </h5>
-      <button>{{ $t("forms.send") }}</button>
+      <button @click="sendSms">{{ $t("forms.send") }}</button>
     </div>
   </div>
 </template>
@@ -27,6 +27,20 @@ export default {
     return {
       number: "",
     };
+  },
+  computed: {
+    getPhone() {
+      return this.$store.state.authRegPhone;
+    },
+  },
+  methods: {
+    smsRepeat() {
+      this.$store.dispatch("getSms", this.getPhone);
+    },
+    sendSms() {
+      this.$store.dispatch("authStepAdd", "pass");
+      // отправка смс
+    },
   },
 };
 </script>

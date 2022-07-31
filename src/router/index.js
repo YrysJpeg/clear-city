@@ -3,19 +3,40 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-import About from "../modules/about/About.vue";
-import Appeals from "../modules/appeals/Appeals.vue";
-import Events from "../modules/events/Events.vue";
-import Faq from "../modules/faq/Faq.vue";
-import News from "../modules/news/News.vue";
-import NewsDetails from "../modules/news/pages/NewsDetails.vue";
-import Account from "../modules/account/Account.vue";
-import MyAppeals from "../modules/account/MyAppeals.vue";
-import MyEvents from "../modules/account/MyEvents.vue";
-import MyVisit from "../modules/account/MyVisit.vue";
-import MyAccountFrom from "../modules/account/components/MyAccountForm.vue";
-import AppealDetails from "../modules/appeals/Appeal-details.vue";
-import EventDetails from "../modules/events/Event-details.vue";
+const About = () =>
+  import(/* webpackChunkName: "about" */ "../modules/about/About.vue");
+const Appeals = () =>
+  import(/* webpackChunkName: "appeals" */ "../modules/appeals/Appeals.vue");
+const Events = () =>
+  import(/* webpackChunkName: "events" */ "../modules/events/Events.vue");
+const Faq = () =>
+  import(/* webpackChunkName: "faq" */ "../modules/faq/Faq.vue");
+const News = () =>
+  import(/* webpackChunkName: "news" */ "../modules/news/News.vue");
+const NewsDetails = () =>
+  import(
+    /* webpackChunkName: "news-details" */ "../modules/news/pages/NewsDetails.vue"
+  );
+const Account = () =>
+  import(/* webpackChunkName: "account" */ "../modules/account/Account.vue");
+const MyAppeals = () =>
+  import(/* webpackChunkName: "account" */ "../modules/account/MyAppeals.vue");
+const MyEvents = () =>
+  import(/* webpackChunkName: "account" */ "../modules/account/MyEvents.vue");
+const MyVisit = () =>
+  import(/* webpackChunkName: "account" */ "../modules/account/MyVisit.vue");
+const MyAccountFrom = () =>
+  import(
+    /* webpackChunkName: "account" */ "../modules/account/components/MyAccountForm.vue"
+  );
+const AppealDetails = () =>
+  import(
+    /* webpackChunkName: "appeal-details" */ "../modules/appeals/Appeal-details.vue"
+  );
+const EventDetails = () =>
+  import(
+    /* webpackChunkName: "event-details" */ "../modules/events/Event-details.vue"
+  );
 
 const routes = [
   {
@@ -30,7 +51,7 @@ const routes = [
   },
   {
     path: "/about",
-    name: "/about",
+    name: "about",
     component: About,
   },
   {

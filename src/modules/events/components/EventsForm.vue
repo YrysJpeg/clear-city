@@ -19,19 +19,39 @@
       </div>
       <div>
         <p>{{ $t("forms.phone") }}</p>
-        <input type="text" placeholder="+7" />
+        <input
+          type="text"
+          placeholder="+7"
+          v-mask="'+7 ### ### ## ##'"
+          v-model="phone"
+        />
       </div>
       <h4>{{ $t("forms.event-info") }}</h4>
       <div>
         <p>{{ $t("forms.address") }}</p>
-        <input type="text" />
+        <input list="maplist" type="text" v-model="val" @input="maps" />
+        <datalist id="maplist">
+          <option
+            v-for="(item, index) of mapResults"
+            :key="index"
+            :value="item.name"
+          >
+            {{ item.name }}
+          </option>
+        </datalist>
       </div>
       <div>
         <p>{{ $t("forms.theme") }}</p>
         <input type="text" name="example" list="exampleList" />
         <datalist id="exampleList">
-          <option value="A">asdsadsad</option>
-          <option value="B">asdasdasdsad</option>
+          <option value="Свалка">Свалка</option>
+          <option value="Крупногабаритные отходы">
+            Крупногабаритные отходы
+          </option>
+          <option value="Переполненные контейнеры">
+            Переполненные контейнеры
+          </option>
+          <option value="Переполненные урны">Переполненные урны</option>
         </datalist>
       </div>
       <div>
@@ -42,6 +62,9 @@
       <div>
         <p>{{ $t("forms.short-text") }}</p>
         <textarea name="" id="" cols="30" rows="10"></textarea>
+      </div>
+      <div>
+        <file-input></file-input>
       </div>
       <button @click="createAppeals">{{ $t("forms.create-events") }}</button>
     </div>
@@ -64,16 +87,30 @@
 </template>
 
 <script>
-import SelectInput from '../../core/form/SelectInput.vue';
+import SelectInput from "../../core/form/SelectInput.vue";
+import FileInput from "../../core/form/FileInput.vue";
 export default {
-  components: { SelectInput },
+  components: { SelectInput, FileInput },
   data() {
     return {
       state: true,
-      stateDate: false
+      stateDate: false,
+      phone: "",
+      val: "",
+      mapResults: "",
     };
   },
   methods: {
+    maps() {
+      fetch(
+        `https://catalog.api.2gis.com/3.0/suggests?q=${this.val}&type=street,building,adm_div.living_area&fields=items.point&location=82.617712,49.949531&key=rurbbn3446`
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          this.mapResults = json.result.items;
+          console.log(this.mapResults);
+        });
+    },
     close() {
       this.state = true;
       this.$emit("close");
@@ -96,7 +133,16 @@ textarea {
 .input {
   width: 288px;
   height: 48px;
-  background: #F6F6F6;
+  background: #f6f6f6;
   border-radius: 10px;
+}
+datalist {
+  width: 100%;
+  background: green;
+
+  option {
+    width: 100%;
+    background: green;
+  }
 }
 </style>

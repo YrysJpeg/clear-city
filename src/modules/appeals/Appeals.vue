@@ -108,9 +108,8 @@
 </template>
 
 <script>
-import AppealsFrom from "./components/AppealsForm.vue";
-// import axios from "axios";
-import MapView from "../core/map/MapView.vue";
+const AppealsFrom = () => import("./components/AppealsForm.vue");
+const MapView = () => import("../core/map/MapView.vue");
 export default {
   components: {
     AppealsFrom,
@@ -123,12 +122,6 @@ export default {
       state: false,
     };
   },
-  // async created() {
-  //   await axios.get("/products").then((json) => {
-  //     this.events = json.data;
-  //     console.log(this.events);
-  //   })
-  // },
   methods: {
     close() {
       this.form = !this.form;
