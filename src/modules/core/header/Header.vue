@@ -59,7 +59,6 @@
           >{{ $t("header.login") }}</router-link
         >
       </div>
-      <Translator v-show="false" />
       <div class="gam" @click="menuState = !menuState">
         <span></span>
         <span></span>
@@ -70,12 +69,10 @@
 </template>
 
 <script>
-import { Translator } from "vue-google-translate";
-import { setCookie } from "../../../utils/cookie/cookies";
+// import { setCookie } from "../../../utils/cookie/cookies";
 import Auth from "../../auth/Auth.vue";
 export default {
   components: {
-    Translator,
     Auth,
   },
   data() {
@@ -92,9 +89,7 @@ export default {
     },
     changeLang(event) {
       localStorage.setItem("lang", event);
-      if (event == "ru") setCookie("googtrans", "/ru/ru");
-      else setCookie("googtrans", "/ru/kk");
-      window.location.reload();
+      this.$store.dispatch("addLang", event);
     },
   },
 };

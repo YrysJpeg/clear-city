@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { setCookie } from "../utils/cookie/cookies";
 // import axios from 'axios'
 // import {awsHost} from '../utils/setting'
 // import {host} from '../utils/setting'
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     addLang({ commit }, lang) {
       commit("SET_LANG", lang);
+      if (lang == "ru") setCookie("googtrans", "/ru/ru");
+      else setCookie("googtrans", "/ru/kk");
+      window.location.reload()
     },
   },
   getters: {

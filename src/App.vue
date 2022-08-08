@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Translator :countries="countries" v-show="false" />
     <notifications />
     <Header />
     <router-view />
@@ -8,13 +9,36 @@
 </template>
 
 <script>
+import { Translator } from "vue-google-translate";
 import Footer from "./modules/core/footer/Footer.vue";
 import Header from "./modules/core/header/Header.vue";
 export default {
+  data() {
+    return {
+      countries: [
+        {
+          code: 'ru|ru',
+          title: 'Russian',
+        },
+        {
+          code: 'kk|kk',
+          title: 'Kazakh',
+        }
+      ]
+    }
+  },
   components: {
     Header,
     Footer,
+    Translator
   },
+  updated() {
+    setTimeout( () => {
+      let test = document.createElement('span').innerHTML = ''
+      document.body.append(test)
+      
+    }, 500)
+  }
 };
 </script>
 
