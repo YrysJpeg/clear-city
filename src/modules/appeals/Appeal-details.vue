@@ -13,7 +13,7 @@
       <section class="details-cnt">
         <div class="details-img">
           <div class="details-img-l" @click="openImage">
-            <img src="../../assets/img/details/menty.png" alt="" />
+            <img :src="getApplicationData.photo_url" alt="" />
             <h5>Запланировано</h5>
           </div>
 
@@ -30,13 +30,10 @@
         <div class="details-info">
           <div class="details-info-user">
             <img src="../../assets/img/details/pacan.png" alt="" />
-            <p>Арман</p>
+            <p>{{ getApplicationData.first_name }}</p>
           </div>
           <p class="details-info-text">
-            Пожалуй, не имеет смысла объяснять, насколько почва является важной
-            частью жизни человека. Большую часть еды, которой питается человек,
-            приносит почва: от злаковых культур до редких видов фруктов и
-            овощей.... <span>Узнать больше</span>
+            {{ getApplicationData.message }}
           </p>
           <div class="details-btns">
             <button class="details-btn">{{ $t("details.help") }} (12)</button>
@@ -70,56 +67,91 @@
         <section class="details-gen-info" v-if="switcher">
           <div class="details-gen-info-l">
             <div
-              class="details-gen-info-progress details-gen-info-progress-active"
+              class="details-gen-info-progress"
+              :class="{
+                'details-gen-info-progress-active': checkStatusStep >= 1,
+              }"
             >
               <div class="details-gen-info-circle">
                 <div></div>
               </div>
-              <p class="details-gen-info-title notranslate info-title-active">
+              <p
+                class="details-gen-info-title notranslate"
+                :class="{ 'info-title-active': checkStatusStep >= 1 }"
+              >
                 {{ $t("details.check") }}
               </p>
             </div>
 
-            <div class="details-gen-info-progress">
+            <div
+              class="details-gen-info-progress"
+              :class="{
+                'details-gen-info-progress-active': checkStatusStep >= 2,
+              }"
+            >
               <div class="details-gen-info-circle">
                 <div></div>
               </div>
-              <p class="details-gen-info-title notranslate">
+              <p
+                class="details-gen-info-title notranslate"
+                :class="{ 'info-title-active': checkStatusStep >= 2 }"
+              >
                 {{ $t("details.reg") }}
               </p>
             </div>
 
-            <div class="details-gen-info-progress">
+            <div
+              class="details-gen-info-progress"
+              :class="{
+                'details-gen-info-progress-active': checkStatusStep >= 3,
+              }"
+            >
               <div class="details-gen-info-circle">
                 <div></div>
               </div>
-              <p class="details-gen-info-title notranslate">
+              <p
+                class="details-gen-info-title notranslate"
+                :class="{ 'info-title-active': checkStatusStep >= 3 }"
+              >
                 {{ $t("main.in-progress") }}
               </p>
             </div>
 
-            <div class="details-gen-info-progress">
+            <div
+              class="details-gen-info-progress"
+              :class="{
+                'details-gen-info-progress-active': checkStatusStep >= 4,
+              }"
+            >
               <div class="details-gen-info-circle">
                 <div></div>
               </div>
-              <p class="details-gen-info-title notranslate">
+              <p
+                class="details-gen-info-title notranslate"
+                :class="{ 'info-title-active': checkStatusStep >= 4 }"
+              >
                 {{ $t("main.done") }}
               </p>
             </div>
           </div>
           <div class="details-gen-info-r">
-            <map-view width="100" height="280"></map-view>
+            <map-view
+              :lat="getApplicationData.latitude"
+              :long="getApplicationData.longitude"
+              width="100"
+              height="280"
+            ></map-view>
           </div>
         </section>
         <section class="details-comments" v-if="!switcher">
           <div class="details-comments-top notranslate">
-            <p>
+            <p v-if="!getIsAuth">
               {{ $t("details.no-login") }}
               <a href="#">{{ $t("details.loggin") }}</a> {{ $t("details.or") }}
               <a href="#">{{ $t("details.regged") }}.</a>
             </p>
             <input type="text" :placeholder="$t('details.send-comment')" />
-            <input type="button" disabled :value="$t('forms.send')" />
+            <input type="button" :disabled="!getIsAuth" :value="$t('forms.send')" />
           </div>
           <div class="details-comments-mid">
             <div class="details-comment">
@@ -159,24 +191,25 @@
       <section class="details-appeals">
         <h4 class="notranslate">{{ $t("details.copy-appeal") }}</h4>
         <div class="details-appeals-row">
-          <div class="details-appeals-card details-card">
+          <div class="details-appeals-card details-card" v-for="(item, index) of getSimilarApp" :key="index">
             <div class="details-card-img">
-              <img src="../../assets/img/details/lyudi.png" alt="" />
+              <img :src="item.photo_url" alt="" v-if="item.photo_url" />
+              <img src="../../assets/img/Rectangle 11.png" alt="" v-else />
               <p>Скоро</p>
             </div>
             <div class="details-card-info">
-              <p class="details-card-title">Эко-субботник</p>
-              <span>24.03.2022 14:53</span>
+              <p class="details-card-title"></p>
+              <span>{{ item.created_date }}</span>
             </div>
             <p class="details-card-title">
-              {{ $t("main.date-time") }}: 22 августа 2022г. 14:00
+              {{ $t("main.type") }}: {{ item.app_type }}
             </p>
             <p class="details-card-title">
-              {{ $t("main.geo") }}: Айтеке би, 54 (Центральный парк)
+              {{ $t("main.address") }}: {{ item.address }}
             </p>
-            <div class="details-card-btn notranslate">
+            <button @click="goPage(item)" class="details-card-btn notranslate">
               {{ $t("main.details") }}
-            </div>
+            </button>
           </div>
         </div>
       </section>
@@ -203,6 +236,34 @@ export default {
       imageSrc: "",
     };
   },
+  created() {
+    this.$store.dispatch("getApplicationObject", this.$route.params.id);
+  },
+  mounted() {
+    this.$store.dispatch('similarApp', this.getApplicationData.app_type)
+  },
+  computed: {
+    getApplicationData() {
+      return this.$store.getters.getApplicationDetails;
+    },
+    checkStatusStep() {
+      if (this.getApplicationData.app_status == "ожидание") {
+        return 1;
+      } else if (this.getApplicationData.app_status == "2") {
+        return 2;
+      } else if (this.getApplicationData.app_status == "3") {
+        return 3;
+      } else {
+        return 4;
+      }
+    },
+    getSimilarApp() {
+      return this.$store.getters.getSimilarApp
+    },
+    getIsAuth() {
+      return this.$store.getters.getIsAuth
+    }
+  },
   methods: {
     sharePage() {
       navigator.share({
@@ -210,6 +271,9 @@ export default {
         text: "chlen",
         url: "https://google.com",
       });
+    },
+    goPage(item) {
+      this.$router.push({name: 'appeal-details', params: { id: item.id }})
     },
     openImage() {
       this.imageState = true;

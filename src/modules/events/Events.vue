@@ -9,7 +9,6 @@
             Сервис созданный для улучшения экологии города и предотвращения
             загрязнении.
           </p>
-          Сортировать
           <button class="notranslate" @click="close">
             {{ $t("main.create-events") }}
           </button>
@@ -49,10 +48,10 @@
         </div>
       </div>
       <div class="search-length notranslate">
-        {{ $t("main.length") }}: <span>25</span>
+        {{ $t("main.length") }}: <span>{{ getEventList.length }}</span>
       </div>
       <div class="start-wrapper" v-if="!state">
-        <div class="start-wrapper__card">
+        <div class="start-wrapper__card" v-for="(item, index) of getEventList" :key="index">
           <div class="start-wrapper__card-img notranslate">
             <button v-if="true" class="added">{{ $t("main.ago") }}</button>
             <button v-if="false" class="moderation">
@@ -61,20 +60,29 @@
             <button v-if="false" class="inprogress">
               {{ $t("main.lated") }}
             </button>
-            <img src="../../assets/img/Rectangle 11.png" alt="" />
+            <img :src="item.photo_url" alt="" v-if="item.photo_url" />
+            <img src="../../assets/img/Rectangle 11.png" alt="" v-else />
           </div>
           <div class="start-wrapper__card-info">
             <h3>№UST46258391</h3>
-            <time>24.03.2022 14:53</time>
+            <time>{{ item.created_date }}</time>
           </div>
           <h5 class="event-type">Эко-субботник</h5>
           <div class="info">
-            Дата и время: <span>22 августа 2022г. 14:00</span>
+            Дата и время: <span>{{ item.date }} {{ item.time }}</span>
           </div>
           <div class="info">
-            Место проведения: <span>Айтеке би, 54 (Центральный парк)</span>
+            Место проведения: <span>{{ item.address }}</span>
           </div>
-          <router-link to class="details">{{ $t("main.details") }}</router-link>
+          <router-link 
+            :to="{
+              path: `/event-details/${item.id}`,
+              params: { id: item.id },
+            }" 
+            class="details"
+            >
+            {{ $t("main.details") }}
+            </router-link>
         </div>
       </div>
       <map-view v-if="state" width="100" height="500"></map-view>
@@ -93,6 +101,14 @@ export default {
       form: false,
       state: false,
     };
+  },
+  computed: {
+    getEventList() {
+      return this.$store.getters.getEvents
+    }
+  },
+  created() {
+    this.$store.dispatch('getEventList')
   },
   methods: {
     close() {

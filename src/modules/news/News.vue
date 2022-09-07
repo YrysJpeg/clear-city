@@ -1,21 +1,16 @@
 <template>
   <div class="news">
     <div class="container">
-      <router-link :to="{ name: 'news-details' }" class="news-top">
+      <router-link :to="{ name: `/news-details/${idUrl}`, params: {id: idUrl} }" class="news-top">
         <div class="news-top__img">
-          <img src="../../assets/img/test-news.jpg" alt="" />
+          <img :src="getNews[0].photo_url" alt="" />
         </div>
         <div class="news-top__info">
-          <h3>Почти полмиллиона саженцев деревьев высадили в городе</h3>
+          <h3>{{ getNews[0].title }}</h3>
           <p>
-            «В своем Послании «Казахстан в новой реальности: время действий»
-            Касым-Жомарт Токаев уделил большое внимание расширению площади лесов
-            в Казахстане. Перед всеми нами стоит задача к 2025 году высадить 2
-            млрд деревьев. В том числе в нашей области 7 млн 75 тыс. саженцев»,
-            - сообщил исполняющий обязанности руководителя отдела инспекции
-            лесного хозяйства и животного ... Читать полностью
+            {{ getNews[0].small_description }}
           </p>
-          <time>20 мая 2022г. 14:45</time>
+          <time>{{ getNews[0].created_date }}</time>
         </div>
       </router-link>
       <div class="news-bottom">
@@ -28,7 +23,22 @@
 <script>
 import NewsCard from "./components/NewsCard.vue";
 export default {
+  data() {
+    return {
+      idUrl : ''
+    }
+  },
   components: { NewsCard },
+  computed: {
+    getNews() {
+      return this.$store.getters.getNews
+    }
+  },
+  created() {
+    this.$store.dispatch('getNewsList')
+    console.log(this.getNews[0]);
+    this.idUrl = this.getNews[0].id
+  }
 };
 </script>
 

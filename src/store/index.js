@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { setCookie } from "../utils/cookie/cookies";
-// import axios from 'axios'
-// import {awsHost} from '../utils/setting'
-// import {host} from '../utils/setting'
+import axios from "axios";
+import host from "../utils/setting";
+import { setCookie, getCookie } from "../utils/cookie/cookies";
+
+const token = getCookie("access_token");
 
 Vue.use(Vuex);
 
@@ -13,6 +14,51 @@ export default new Vuex.Store({
     authState: false,
     authStep: "login",
     authRegPhone: "",
+    isAuth: false,
+    profile: {
+      access_type: "",
+      avatar: "",
+      email: "",
+      first_name: "",
+      gender: "",
+      id: "",
+      last_name: "",
+      password: "",
+      phone_number: "",
+      username: "",
+    },
+    allApplications: [],
+    applicationDetails: {
+      address: "Egizbaeva 7/99",
+      app_status: "ожидание",
+      app_type: "переполненные урны",
+      created_date: "2022-09-06T00:00:00Z",
+      first_name: "yerasyl1",
+      id: "056100a7-627e-4475-9277-bc31999a1da0",
+      last_name: "tleugazy1",
+      latitude: 3.4344,
+      longitude: 5.423,
+      message: "камеру убирай бля1",
+      patronymic: "baurzhanuly1",
+      phone_number: "+77084443322",
+      photo_url: "",
+      user_id: "",
+      video_url: "",
+    },
+    similarApplication: "",
+    events: [],
+    myAppeals: [],
+    myEvents: [],
+    news: '',
+    newsDetails: {
+      id: "",
+      title: "",
+      small_description: "",
+      description: "",
+      photo_url: "",
+      author_id: "",
+      created_date: ""
+    }
   },
   mutations: {
     SET_AUTH_STATE(state, boolean) {
@@ -27,6 +73,36 @@ export default new Vuex.Store({
     SET_LANG(state, lang) {
       state.lang = lang;
     },
+    SET_PROFILE(state, data) {
+      state.profile = data;
+    },
+    SET_ALL_APPLICATIONS(state, data) {
+      state.allApplications = data;
+    },
+    SET_APPEAL_DETAILS(state, data) {
+      state.applicationDetails = data;
+    },
+    SET_SIMILAR_APP(state, data) {
+      state.similarApplication = data;
+    },
+    SET_IS_AUTH(state, bool) {
+      state.isAuth = bool
+    },
+    SET_EVENTS(state, data) {
+      state.events = data
+    },
+    SET_MY_APPEAL(state, data) {
+      state.myAppeals = data
+    },
+    SET_MY_EVENT(state, data) {
+      state.myEvents = data
+    },
+    SET_NEWS(state, data) {
+      state.news = data
+    },
+    SET_NEWS_DETAILS(state, data) {
+      state.newsDetails = data
+    }
   },
   actions: {
     authForm({ commit }, value) {
@@ -42,11 +118,221 @@ export default new Vuex.Store({
       commit("SET_LANG", lang);
       if (lang == "ru") setCookie("googtrans", "/ru/ru");
       else setCookie("googtrans", "/ru/kk");
-      window.location.reload()
+      window.location.reload();
     },
+    getProfile({ commit }) {
+      axios
+        .get(`/auth/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          commit("SET_PROFILE", res.data);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
+    isAuthorize({commit}) {
+      if (getCookie('access_token')) {
+        commit('SET_IS_AUTH', true)
+      } else {
+        commit('SET_IS_AUTH', false)
+      }
+    },
+    login({commit}, payload) {
+      axios
+        .post(`${host.host}/auth/login`, payload)
+        .then((res) => {
+          setCookie("access_token", res.data.access_token, { expires: 1 });
+          setCookie("refresh_token", res.data.refresh_token, { expires: 1 });
+          commit('SET_IS_AUTH', true)
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
+    updateProfile(_, value) {
+      axios
+        .put(`${host.host}/auth/profile`, value, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    },
+    updateAvatar(_, data) {
+      axios
+        .put(`${host.host}/auth/avatar`, data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    },
+    createAppeals(_, data) {
+      let mainData = data
+      delete mainData['photo_url']
+      return axios
+        .post(`${host.host}/application`, mainData)
+        
+    },
+    createAppealsAuth(_, data) {
+      axios
+        .post(`${host.host}/application/create`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
+    getAppList({ commit }) {
+      axios
+        .get(`${host.host}/application/list`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(function (res) {
+          commit("SET_ALL_APPLICATIONS", res.data.applications);
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
+    },
+    getApplicationObject({ commit }, id) {
+      axios
+        .get(`${host.host}/application/id?id=${id}`)
+        .then(function (res) {
+          commit("SET_APPEAL_DETAILS", res.data);
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
+    },
+    myAppeals() {
+
+    },
+    similarApp({commit}, type) {
+      axios
+        .get(`${host.host}/application/type?type=${type}`)
+        .then(function (res) {
+          console.log(res.data);
+          let random = res.data.sort(() => 0.5 - Math.random())
+          let selected = random.slice(0, 3);
+          commit("SET_SIMILAR_APP", selected);
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
+    },
+    uploadPhoto(_, data) {
+      axios
+        .put(`${host.host}/application/file?id=${data.res}`, data.formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    },
+    getEventList({commit}) {
+      axios
+        .get(`${host.host}/event`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(function (res) {
+          console.log(res);
+          commit("SET_EVENTS", res.data);
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
+    },
+    getMyAppeal({commit}) {
+      axios
+        .get(`${host.host}/application/list`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(function (res) {
+          console.log(res);
+          commit("SET_MY_APPEAL", res.data.applications);
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
+    },
+    getMyEvent({commit}) {
+      axios
+      .get(`${host.host}/event/my`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (res) {
+        console.log(res);
+        commit("SET_MY_EVENT", res.data);
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+    },
+    getNewsList({commit}) {
+      axios
+      .get(`${host.host}/news`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (res) {
+        console.log(res);
+        commit("SET_NEWS", res.data);
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+    },
+    getNewsDetails({commit}, id) {
+      axios
+        .get(`${host.host}/news/id?id=${id}`)
+        .then(function (res) {
+          console.log(res);
+          commit("SET_NEWS_DETAILS", res.data);
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
+    }
   },
   getters: {
     getAuthState: (state) => state.authState,
     getAuthStep: (state) => state.authStep,
+    getProfile: (state) => state.profile,
+    getAllApplications: (state) => state.allApplications,
+    getApplicationDetails: (state) => state.applicationDetails,
+    getSimilarApp: (state) => state.similarApplication,
+    getIsAuth: (state) => state.isAuth,
+    getEvents: (state) => state.events,
+    getMyAppeals: (state) => state.myAppeals,
+    getMyEvents: (state) => state.myEvents,
+    getNews: (state) => state.news,
+    getNewsDetail: (state) => state.newsDetails
   },
 });

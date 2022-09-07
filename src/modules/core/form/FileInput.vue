@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       images: [],
+      files: ''
     };
   },
   methods: {
@@ -47,9 +48,19 @@ export default {
         };
         reader.readAsDataURL(files[i]);
       }
+
+      
       this.images = fileArr;
 
-      this.$emit("image", this.images);
+      this.files = e.target.files
+      const formData = new FormData()
+      for (let i = 0; i < this.files.length; i++) {
+        let file = this.files[i]
+        formData.append('file', file);
+      }
+      console.log(formData);
+
+      this.$emit("image", formData);
     },
     deleteImg(index) {
       this.images.splice(index, 1);

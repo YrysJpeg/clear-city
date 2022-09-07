@@ -42,14 +42,14 @@
         <p>{{ $t("forms.type") }}</p>
         <input type="text" name="example" v-model="type" list="exampleList" />
         <datalist id="exampleList">
-          <option value="Свалка">Свалка</option>
-          <option value="Крупногабаритные отходы">
+          <option value="свалка">Свалка</option>
+          <option value="крупногабаритные отходы">
             Крупногабаритные отходы
           </option>
-          <option value="Переполненные контейнеры">
+          <option value="переполненные контейнеры">
             Переполненные контейнеры
           </option>
-          <option value="Переполненные урны">Переполненные урны</option>
+          <option value="переполненные урны">переполненные урны</option>
         </datalist>
       </div>
       <div>
@@ -96,6 +96,11 @@ export default {
       lastname: "",
     };
   },
+  computed: {
+    getIsAuth() {
+      return this.$store.getters.getIsAuth
+    }
+  },
   methods: {
     maps() {
       fetch(
@@ -104,7 +109,9 @@ export default {
         .then((res) => res.json())
         .then((json) => {
           this.mapResults = json.result.items;
-          console.log(this.mapResults);
+          console.log(this.mapResults = json.result.items);
+          this.lat = this.mapResults[0].point.lat
+          this.long = this.mapResults[0].point.lon
         });
     },
     close() {
@@ -117,17 +124,46 @@ export default {
     },
     createAppeals() {
       const data = {
+        app_type: this.type,
+        message: "камеру убирай бля1",
+        first_name: this.name,
+        last_name: this.lastname,
+        patronymic: "none",
+        phone_number: this.phone,
+        latitude: this.lat,
+        longitude: this.long,
         address: this.val,
-        // description : ,
-        // date : ,
-        // time :"17:00",
-        organizer_info: this.phone.split(" ").join(""),
-        document_url: this.img,
-        longitude: this.mapResults[0].point.lon,
-        latitude: this.mapResults[0].point.lat,
+        photo_url: this.img
       };
       console.log(data);
-      this.state = !this.state;
+      if (this.getIsAuth) {
+        this.$store.dispatch("createAppealsAuth", data)
+          .then(res => {
+            let data = {
+              res: res.data.id,
+              formData: this.img
+            }
+            console.log(data);
+            this.$store.dispatch('uploadPhoto', data)
+            this.state = !this.state
+          })
+          .catch(e => {
+            console.log(e);
+          })
+      } else {
+        this.$store.dispatch("createAppeals", data)
+          .then(res => {
+            let data = {
+              res: res.data.id,
+              formData: this.img
+            }
+            this.$store.dispatch('uploadPhoto', data)
+            this.state = !this.state
+          })
+          .catch(e => {
+            console.log(e);
+          })
+      }
     },
   },
 };

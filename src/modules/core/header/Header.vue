@@ -53,11 +53,15 @@
           </div>
         </div>
         <router-link
+          v-if="!checkAuth"
           @click.native="openModal"
           to
           class="header-auth notranslate"
           >{{ $t("header.login") }}</router-link
         >
+        <router-link v-else to="/account" class="header-auth notranslate">{{
+          $t("header.account")
+        }}</router-link>
       </div>
       <div class="gam" @click="menuState = !menuState">
         <span></span>
@@ -69,7 +73,6 @@
 </template>
 
 <script>
-// import { setCookie } from "../../../utils/cookie/cookies";
 import Auth from "../../auth/Auth.vue";
 export default {
   components: {
@@ -81,6 +84,12 @@ export default {
       menuState: false,
       lang: lang,
     };
+  },
+  computed: {
+    checkAuth() {
+      return this.$store.getters.getIsAuth
+
+    },
   },
   methods: {
     openModal() {

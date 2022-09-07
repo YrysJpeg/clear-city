@@ -1,2 +1,3 @@
-export const awsHost = "exmaple";
-export const host = "host";
+export default {
+  host: "http://localhost:8080",
+};

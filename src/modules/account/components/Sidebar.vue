@@ -2,16 +2,20 @@
   <div :class="{ 'active-menu': menuState }" class="bar">
     <aside class="my-account-bar notranslate">
       <section class="my-account-user">
-        <img src="../../../assets/img/telka.png" alt="" />
-        <p>Айгерим Сабитова</p>
+        <img :src="getProfile.avatar" alt="" />
+        <p style="margin-top:10px">{{ getProfile.first_name }} {{ getProfile.last_name }}</p>
+        <label class="avatar-label" for="avatar">
+          <img src="../../../assets/img/avatar-add.svg" alt="">
+        </label>
+        <input id="avatar" type="file" @change="photoUpdate" v-show="false"/>
       </section>
 
       <nav class="my-account-nav">
         <ul>
-          <li>{{ $t("account.my-acc") }}</li>
-          <li class="active">{{ $t("account.my-appeals") }}</li>
-          <li>{{ $t("account.my-events") }}</li>
-          <li>{{ $t("account.my-help") }}</li>
+          <li><router-link to="/account">{{ $t("account.my-acc") }}</router-link></li>
+          <li><router-link to="/account/my-appeals">{{ $t("account.my-appeals") }}</router-link></li>
+          <li><router-link to="/account/my-events">{{ $t("account.my-events") }}</router-link></li>
+          <li><router-link to="/account/my-visit">{{ $t("account.my-help") }}</router-link></li>
           <li>{{ $t("account.logut") }}</li>
         </ul>
       </nav>
@@ -31,7 +35,29 @@ export default {
   data() {
     return {
       menuState: false,
+      photo: [],
     };
+  },
+  computed: {
+    getProfile() {
+      return this.$store.getters.getProfile;
+    },
+  },
+  methods: {
+    sidebarActive(e) {
+      let nav = document.querySelectorAll('.my-account-nav ul > li > a')
+      console.log(nav, e);
+    },
+    photoUpdate(e) {
+      this.photo = e.target.files;
+      const formData = new FormData();
+      for (let i = 0; i < this.photo.length; i++) {
+        let file = this.photo[i]
+        formData.append('file', file);
+      }
+      console.log(formData);
+      this.$store.dispatch('updateAvatar', formData)
+    },
   },
 };
 </script>
@@ -59,5 +85,11 @@ export default {
 .active-menu {
   margin-left: 0% !important;
   transition: 0.5s;
+}
+.router-link-active {
+  color: green;
+}
+.my-account-nav a {
+  color: black;
 }
 </style>

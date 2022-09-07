@@ -17,28 +17,28 @@ export default {
     return {
       countries: [
         {
-          code: 'ru|ru',
-          title: 'Russian',
+          code: "ru|ru",
+          title: "Russian",
         },
         {
-          code: 'kk|kk',
-          title: 'Kazakh',
-        }
-      ]
-    }
+          code: "kk|kk",
+          title: "Kazakh",
+        },
+      ],
+    };
   },
   components: {
     Header,
     Footer,
-    Translator
+    Translator,
   },
   updated() {
-    setTimeout( () => {
-      let test = document.createElement('span').innerHTML = ''
-      document.body.append(test)
-      
-    }, 500)
-  }
+    setTimeout(() => {
+      let test = (document.createElement("span").innerHTML = "");
+      document.body.append(test);
+    }, 500);
+    this.$store.dispatch('isAuthorize')
+  },
 };
 </script>
 

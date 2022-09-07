@@ -17,6 +17,9 @@ export default {
   components: {
     Sidebar,
   },
+  created() {
+    this.$store.dispatch("getProfile");
+  },
 };
 </script>
 

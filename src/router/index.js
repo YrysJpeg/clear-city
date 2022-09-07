@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { getCookie } from "../utils/cookie/cookies";
 
 Vue.use(VueRouter);
 
@@ -70,17 +71,17 @@ const routes = [
     component: News,
   },
   {
-    path: "/news/details",
+    path: "/news-details/:id",
     name: "news-details",
     component: NewsDetails,
   },
   {
-    path: "/appeal-details",
+    path: "/appeal-details/:id",
     name: "appeal-details",
     component: AppealDetails,
   },
   {
-    path: "/event-details",
+    path: "/event-details/:id",
     name: "event-details",
     component: EventDetails,
   },
@@ -88,9 +89,9 @@ const routes = [
     path: "/account",
     name: "account",
     component: Account,
-    // meta: {
-    //   auth: true,
-    // },
+    meta: {
+      auth: true,
+    },
     children: [
       {
         path: "",
@@ -121,16 +122,16 @@ const router = new VueRouter({
   },
 });
 
-// router.beforeEach((to, from, next) => {
-//   const localUser = localStorage.getItem("auth");
+router.beforeEach((to, from, next) => {
+  const localUser = getCookie("access_token");
 
-//   const requireAuth = to.matched.some((record) => record.meta.auth);
+  const requireAuth = to.matched.some((record) => record.meta.auth);
 
-//   if (requireAuth && localUser !== "1") {
-//     next("/");
-//   } else {
-//     next();
-//   }
-// });
+  if (requireAuth && !localUser) {
+    next("/");
+  } else {
+    next();
+  }
+});
 
 export default router;

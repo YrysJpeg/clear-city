@@ -14,22 +14,43 @@ export default {
     height: {
       default: 400,
     },
+    lat: {
+      default: "",
+    },
+    long: {
+      default: "",
+    },
   },
   data() {
     return {
       map: null,
     };
   },
+  computed: {
+    getAllApplications() {
+      return this.$store.getters.getAllApplications;
+    },
+  },
   mounted() {
     this.$refs.cap.style.width = this.width + "%";
     this.$refs.cap.style.height = this.height + "px";
-    this.map = new DG.map(this.$refs.cap, {
-      center: [49.949531, 82.617712],
-      zoom: 13,
-      minZoom: 10,
-      fullscreenControl: false,
-    });
-    DG.marker([49.944428, 82.623576], {}).addTo(this.map);
+    if (this.long && this.lat) {
+      this.map = new DG.map(this.$refs.cap, {
+        center: [this.long, this.lat],
+        zoom: 13,
+        minZoom: 10,
+        fullscreenControl: false,
+      });
+      DG.marker([this.long, this.lat], {}).addTo(this.map);
+    } else {
+      this.map = new DG.map(this.$refs.cap, {
+        center: [49.949531, 82.617712],
+        zoom: 13,
+        minZoom: 10,
+        fullscreenControl: false,
+      });
+      DG.marker([49.949531, 82.623576], {}).addTo(this.map);
+    }
   },
   beforeDestroy() {
     if (this.map) this.map.remove();

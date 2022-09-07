@@ -27,56 +27,32 @@
           </div>
 
           <div class="my-account-inner">
-            <div class="empty" v-if="empty">
+            <div class="empty" v-if="getMyAppeal.length == 0">
               <img src="../../assets/img/Group220.png" alt="" />
               <p>
                 {{ $t("account.appeal-text") }}
                 <a href="#">{{ $t("account.create-appeal") }}</a>
               </p>
             </div>
-            <div class="cnt" v-if="!empty">
-              <figure class="my-account-card card">
+            <div class="cnt" v-if="getMyAppeal.length !== 0">
+              <figure class="my-account-card card" v-for="(item, index) of getMyAppeal" :key="index">
                 <div class="card-left">
                   <img
                     class="card-img"
-                    src="../../assets/img/menty.png"
+                    :src="item.photo_url"
                     alt=""
                   />
-                  <figcaption class="card-status">Запланировано</figcaption>
+                  <figcaption class="card-status">{{ item.app_status }}</figcaption>
                 </div>
 
                 <div class="card-right">
                   <span class="card-num">№UST46258391</span>
-                  <p class="card-p">Тип: Скопление мусора</p>
-                  <p class="card-p">Адрес: Айтеке би, 54</p>
-                  <p class="card-p">Дата создания: 22.10.2022 14:54</p>
+                  <p class="card-p">Тип: {{ item.app_type }}</p>
+                  <p class="card-p">Адрес: {{ item.address }}</p>
+                  <p class="card-p">Дата создания: {{ item.created_date }}</p>
 
                   <div class="card-btns notranslate">
-                    <button class="card-btn">{{ $t("main.details") }}</button>
-                    <button class="card-btn card-btn--s">
-                      {{ $t("account.edit-appeal") }}
-                    </button>
-                  </div>
-                </div>
-              </figure>
-              <figure class="my-account-card card">
-                <div class="card-left">
-                  <img
-                    class="card-img"
-                    src="../../assets/img/menty.png"
-                    alt=""
-                  />
-                  <figcaption class="card-status">Запланировано</figcaption>
-                </div>
-
-                <div class="card-right">
-                  <span class="card-num">№UST46258391</span>
-                  <p class="card-p">Тип: Скопление мусора</p>
-                  <p class="card-p">Адрес: Айтеке би, 54</p>
-                  <p class="card-p">Дата создания: 22.10.2022 14:54</p>
-
-                  <div class="card-btns notranslate">
-                    <button class="card-btn">{{ $t("main.details") }}</button>
+                    <button @click="appealDetails(item)" class="card-btn">{{ $t("main.details") }}</button>
                     <button class="card-btn card-btn--s">
                       {{ $t("account.edit-appeal") }}
                     </button>
@@ -98,6 +74,19 @@ export default {
       empty: false,
     };
   },
+  computed: {
+    getMyAppeal() {
+      return this.$store.getters.getMyAppeals
+    }
+  },
+  created() {
+    this.$store.dispatch('getMyAppeal')
+  },
+  methods: {
+    appealDetails(item) {
+      this.$router.push({name: 'appeal-details', params: { id: item.id }})
+    }
+  }
 };
 </script>
 

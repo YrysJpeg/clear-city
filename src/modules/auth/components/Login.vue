@@ -7,7 +7,8 @@
       <h3>{{ $t("forms.login") }}</h3>
       <div class="form-item">
         <p>{{ $t("forms.phone") }}</p>
-        <input type="text" v-model="phone" v-mask="'+7 ### ### ## ##'" />
+        <!-- v-mask="'+7 ### ### ## ##'" -->
+        <input type="text" v-model="phone" />
       </div>
       <div class="form-item">
         <p>{{ $t("forms.pass") }}</p>
@@ -32,12 +33,11 @@ export default {
   methods: {
     login() {
       const data = {
-        phone: this.phone.split(" ").join(""),
-        pass: this.pass,
+        username: this.phone.split(" ").join(""),
+        password: this.pass,
       };
-      console.log(data);
       this.$store.dispatch("authForm", false);
-      // тут запрос на вход и чистим состояние дата для отправки
+      this.$store.dispatch("login", JSON.stringify(data));
     },
     reg() {
       this.$store.dispatch("authStepAdd", "reg");

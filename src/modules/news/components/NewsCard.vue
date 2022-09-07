@@ -1,34 +1,26 @@
 <template>
   <div class="news-bottom">
-    <router-link :to="{ name: 'news-details' }" class="news-card">
-      <img src="../../../assets/img/test-news.jpg" alt="" />
-      <div class="news-card__layer"></div>
-      <div class="news-card__content">
-        <h3>Почти 5000 саженцев деревьев высадили в городе</h3>
-        <time>20 мая 2022г. 14:45</time>
-      </div>
-    </router-link>
-    <router-link :to="{ name: 'news-details' }" class="news-card">
-      <img src="../../../assets/img/test-news.jpg" alt="" />
-      <div class="news-card__layer"></div>
-      <div class="news-card__content">
-        <h3>Почти 5000 саженцев деревьев высадили в городе</h3>
-        <time>20 мая 2022г. 14:45</time>
-      </div>
-    </router-link>
-    <router-link :to="{ name: 'news-details' }" class="news-card">
-      <img src="../../../assets/img/test-news.jpg" alt="" />
-      <div class="news-card__layer"></div>
-      <div class="news-card__content">
-        <h3>Почти 5000 саженцев деревьев высадили в городе</h3>
-        <time>20 мая 2022г. 14:45</time>
-      </div>
-    </router-link>
+    <div v-for="(item, index) of getNews" :key="index">
+      <router-link :to="{ path: `/news-details/${item.id}`, params: {id: item.id} }" class="news-card">
+        <img :src="item.photo_url" alt="" />
+        <div class="news-card__layer"></div>
+        <div class="news-card__content">
+          <h3>{{ item.title }}</h3>
+          <time>{{ item.created_date }}</time>
+        </div>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    getNews() {
+      return this.$store.getters.getNews
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

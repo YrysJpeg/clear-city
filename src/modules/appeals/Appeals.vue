@@ -63,19 +63,22 @@
         </div>
       </div>
       <div class="search-length notranslate">
-        {{ $t("main.length") }}: <span>{{ events.length }}</span>
+        {{ $t("main.length") }}: <span>{{ getAllApplications.length }}</span>
       </div>
       <div class="start-wrapper" v-if="!state">
         <div
           class="start-wrapper__card"
-          v-for="(item, index) of events"
+          v-for="(item, index) of getAllApplications"
           :key="index"
         >
           <div class="start-wrapper__card-img">
-            <button v-if="true" class="added notranslate">
+            <button v-if="false" class="added notranslate">
               {{ $t("main.scheduled") }}
             </button>
-            <button v-if="false" class="moderation notranslate">
+            <button
+              v-if="item.app_status == 'ожидание'"
+              class="moderation notranslate"
+            >
               {{ $t("main.treatmet") }}
             </button>
             <button v-if="false" class="inprogress notranslate">
@@ -84,24 +87,35 @@
             <button v-if="false" class="complete notranslate">
               {{ $t("main.done") }}
             </button>
-            <img :src="item.image" alt="" />
+            <img :src="item.photo_url" alt="" v-if="item.photo_url" />
+            <img src="../../assets/img/Rectangle 11.png" alt="" v-else />
           </div>
           <div class="start-wrapper__card-info">
             <h3>{{ item.title }}</h3>
-            <time>24.03.2022 14:53</time>
+            <time>{{ item.created_date }}</time>
           </div>
           <div class="info notranslate">
-            {{ $t("main.type") }}: <span>Скопление мусора</span>
+            {{ $t("main.type") }}: <span>{{ item.app_type }}</span>
           </div>
           <div class="info notranslate">
-            {{ $t("main.address") }}: <span>Айтеке би, 54</span>
+            {{ $t("main.address") }}: <span>{{ item.address }}</span>
           </div>
-          <router-link to class="details notranslate">{{
-            $t("main.details")
-          }}</router-link>
+          <router-link
+            :to="{
+              path: `/appeal-details/${item.id}`,
+              params: { id: item.id },
+            }"
+            class="details notranslate"
+            >{{ $t("main.details") }}</router-link
+          >
         </div>
       </div>
-      <map-view v-if="state" width="100" height="500"></map-view>
+      <map-view
+        appeals="getAllApplications"
+        v-if="state"
+        width="100"
+        height="500"
+      ></map-view>
       <button class="show-more notranslate">{{ $t("main.load-more") }}</button>
     </div>
   </div>
@@ -126,6 +140,15 @@ export default {
     close() {
       this.form = !this.form;
     },
+  },
+  computed: {
+    getAllApplications() {
+      return this.$store.getters.getAllApplications;
+    },
+  },
+  created() {
+    console.log(this.getAllApplications);
+    this.$store.dispatch("getAppList");
   },
 };
 </script>

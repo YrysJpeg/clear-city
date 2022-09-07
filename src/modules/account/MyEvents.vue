@@ -36,7 +36,7 @@
             </div>
 
             <div class="cnt" v-if="!empty">
-              <figure class="my-account-card card">
+              <figure class="my-account-card card" v-for="(item, index) of getMyEvent" :key="index">
                 <div class="card-left">
                   <img
                     class="card-img"
@@ -49,12 +49,12 @@
                 <div class="card-right">
                   <span class="card-num">№UST46258391</span>
                   <p class="card-p">Тип: Эко-субботник</p>
-                  <p class="card-p">Дата и время: 22 августа 2022г. 14:00</p>
-                  <p class="card-p">Место проведения: Айтеке би, 54</p>
-                  <p class="card-p">Дата создания: 22.10.2022 14:54</p>
+                  <p class="card-p">Дата и время: {{ item.date }} {{ item.time }}</p>
+                  <p class="card-p">Место проведения: {{ item.address }}</p>
+                  <p class="card-p">Дата создания: {{ item.created_date }}</p>
 
                   <div class="card-btns notranslate">
-                    <button class="card-btn">{{ $t("main.details") }}</button>
+                    <button @click="appealDetails(item)" class="card-btn">{{ $t("main.details") }}</button>
                     <button class="card-btn card-btn--s">
                       {{ $t("account.edit") }}
                     </button>
@@ -76,6 +76,19 @@ export default {
       empty: false,
     };
   },
+  computed: {
+    getMyEvent() {
+      return this.$store.getters.getMyEvents
+    }
+  },
+  created() {
+    this.$store.dispatch('getMyEvent')
+  },
+  methods: {
+    appealDetails(item) {
+      this.$router.push({name: 'event-details', params: { id: item.id }})
+    }
+  }
 };
 </script>
 
