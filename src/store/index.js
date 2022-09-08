@@ -143,7 +143,11 @@ export default new Vuex.Store({
     },
     login({commit}, payload) {
       axios
-        .post(`${host.host}/auth/login`, payload)
+        .post(`${host.host}/auth/login`, payload, {
+          headers : {
+            'Content-Type': 'application/json'
+          }
+        })
         .then((res) => {
           setCookie("access_token", res.data.access_token, { expires: 1 });
           setCookie("refresh_token", res.data.refresh_token, { expires: 1 });
