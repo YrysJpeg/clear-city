@@ -20,7 +20,10 @@
       <div class="start-bottom">
         <h3 class="notranslate">{{ $t("main.appeals") }}</h3>
         <div class="start-bottom__head">
-          <input type="text" placeholder="Поиск" />
+          <div>
+            <input type="text" placeholder="Поиск" />
+            <img src="../../assets/img/search.svg" alt="">
+          </div>
           <button class="search notranslate">{{ $t("main.find") }}</button>
           <button
             class="btn-map notranslate"
@@ -157,5 +160,16 @@ export default {
 @import "../../assets/css/start";
 .active {
   color: #008037;
+}
+.start-bottom__head {
+  >div {
+    position: relative;
+
+    img {
+      position: absolute;
+      right: 15px;
+      top: 20px;
+    }
+  }
 }
 </style>

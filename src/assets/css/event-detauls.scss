@@ -8,8 +8,11 @@
 
 .details {
     padding: 45px 0 45px 0;
+    @media (max-width: 1040px) {
+        padding-top: 0;
+    }
     @media screen and (max-width: 769px) {
-        padding: 40px 0;
+        padding: 0px 0;
     }
     .container {
         @media screen and (max-width: 1025px) {
@@ -24,6 +27,7 @@
         color: #000000;
         margin: 0 0 48px 0;
         text-align: left;
+        margin-top: 30px;
         @media screen and (max-width: 769px) {
             font-size: 27px;
             text-align: center;

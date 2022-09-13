@@ -9,6 +9,7 @@
       <button class="next" @click="nextImage"></button>
     </div>
     <div class="container">
+      <go-back></go-back>
       <h3 class="notranslate">{{ $t("details.event") }}</h3>
       <section class="details-cnt">
         <div class="details-img">
@@ -209,9 +210,10 @@
 </template>
 
 <script>
+import GoBack from '../core/back/Go-back.vue'
 import MapView from "../core/map/MapView.vue";
 export default {
-  components: { MapView },
+  components: { MapView, GoBack },
   data() {
     return {
       switcher: true,
@@ -227,6 +229,14 @@ export default {
       imageSrc: "",
     };
   },
+  // computed: {
+  //   getEventDetails() {
+  //     return this.$store.getters.getEventDetail
+  //   }
+  // },
+  // created() {
+  //   this.$store.dispatch('getEventDetails', this.$route.params.id)
+  // },
   methods: {
     sharePage() {
       navigator.share({

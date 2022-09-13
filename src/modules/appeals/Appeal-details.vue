@@ -9,6 +9,7 @@
       <button class="next" @click="nextImage"></button>
     </div>
     <div class="container">
+      <go-back></go-back>
       <h3 class="notranslate">{{ $t("details.appeal") }} №UST46258391</h3>
       <section class="details-cnt">
         <div class="details-img">
@@ -219,8 +220,9 @@
 
 <script>
 import MapView from "../core/map/MapView.vue";
+import GoBack from '../core/back/Go-back.vue'
 export default {
-  components: { MapView },
+  components: { MapView, GoBack },
   data() {
     return {
       switcher: true,

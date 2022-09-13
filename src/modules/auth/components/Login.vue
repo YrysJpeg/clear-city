@@ -12,7 +12,16 @@
       </div>
       <div class="form-item">
         <p>{{ $t("forms.pass") }}</p>
-        <input type="password" v-model="pass" />
+        <div>
+          <input type="text" v-model="pass" v-if="passState" />
+          <input type="password" v-model="pass" v-else />
+          <button class="show-pass" @click="passState = !passState">
+            <img
+              src="../../../assets/img/showPass.svg"
+              alt=""
+            />
+          </button>
+        </div>
       </div>
       <router-link to>{{ $t("forms.reset") }}</router-link>
       <button @click="login" class="form-login">{{ $t("forms.login") }}</button>
@@ -28,6 +37,7 @@ export default {
     return {
       phone: "",
       pass: "",
+      passState: false
     };
   },
   methods: {
@@ -48,4 +58,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../assets/css/auth";
+.show-pass {
+  position: relative;
+  left: -30px;
+}
 </style>

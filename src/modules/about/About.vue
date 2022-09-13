@@ -1,6 +1,9 @@
 <template>
   <div class="about">
     <div class="container">
+      <go-back></go-back>
+    </div>
+    <div class="container">
       <div class="about-left">
         <img src="../../assets/img/rafiki2.svg" alt="" />
       </div>
@@ -28,7 +31,9 @@
 </template>
 
 <script>
-export default {};
+import GoBack from '../core/back/Go-back.vue';
+export default {
+  components: { GoBack },};
 </script>
 
 <style lang="scss" scoped>

@@ -27,7 +27,7 @@
           </div>
 
           <div class="my-account-inner">
-            <div class="empty" v-if="empty">
+            <div class="empty" v-if="getMyEvent.length == 0">
               <img src="../../assets/img/Group220.png" alt="" />
               <p>
                 {{ $t("account.event-text") }}
@@ -35,7 +35,7 @@
               </p>
             </div>
 
-            <div class="cnt" v-if="!empty">
+            <div class="cnt" v-if="getMyEvent.length !== 0">
               <figure class="my-account-card card" v-for="(item, index) of getMyEvent" :key="index">
                 <div class="card-left">
                   <img
@@ -71,11 +71,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      empty: false,
-    };
-  },
   computed: {
     getMyEvent() {
       return this.$store.getters.getMyEvents

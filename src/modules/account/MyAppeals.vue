@@ -69,11 +69,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      empty: false,
-    };
-  },
   computed: {
     getMyAppeal() {
       return this.$store.getters.getMyAppeals

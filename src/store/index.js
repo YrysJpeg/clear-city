@@ -29,21 +29,34 @@ export default new Vuex.Store({
     },
     allApplications: [],
     applicationDetails: {
-      address: "Egizbaeva 7/99",
-      app_status: "ожидание",
-      app_type: "переполненные урны",
-      created_date: "2022-09-06T00:00:00Z",
-      first_name: "yerasyl1",
-      id: "056100a7-627e-4475-9277-bc31999a1da0",
-      last_name: "tleugazy1",
-      latitude: 3.4344,
-      longitude: 5.423,
-      message: "камеру убирай бля1",
-      patronymic: "baurzhanuly1",
-      phone_number: "+77084443322",
+      address: "",
+      app_status: "",
+      app_type: "",
+      created_date: "",
+      first_name: "",
+      id: "",
+      last_name: "",
+      latitude: "",
+      longitude: "",
+      message: "",
+      patronymic: "",
+      phone_number: "",
       photo_url: "",
       user_id: "",
       video_url: "",
+    },
+    eventDetails: {
+        id:  "",
+        address:  "",
+        description:  "",
+        date:  "",
+        time:  "",
+        organizer_info: "",
+        document_url:  "",
+        longitude:  null,
+        latitude:  null,
+        user_id:  "",
+        created_date: ""
     },
     similarApplication: "",
     events: [],
@@ -102,7 +115,10 @@ export default new Vuex.Store({
     },
     SET_NEWS_DETAILS(state, data) {
       state.newsDetails = data
-    }
+    },
+    // SET_EVENT_DETAIL(state, data) {
+    //   state.eventDetails = data
+    // }
   },
   actions: {
     authForm({ commit }, value) {
@@ -185,13 +201,14 @@ export default new Vuex.Store({
       let mainData = data
       delete mainData['photo_url']
       return axios
-        .post(`${host.host}/application`, mainData)
+        .post(`${host.host}/application/`, mainData)
         
     },
     createAppealsAuth(_, data) {
       axios
         .post(`${host.host}/application/create`, data, {
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         })
@@ -226,8 +243,21 @@ export default new Vuex.Store({
           console.log(e);
         });
     },
-    myAppeals() {
-
+    sendFeedback(_, data) {
+      axios
+        .post(`${host.host}/feedback/`, data, {
+          headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     },
     similarApp({commit}, type) {
       axios
@@ -255,7 +285,7 @@ export default new Vuex.Store({
     },
     getEventList({commit}) {
       axios
-        .get(`${host.host}/event`, {
+        .get(`${host.host}/event/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -270,7 +300,7 @@ export default new Vuex.Store({
     },
     getMyAppeal({commit}) {
       axios
-        .get(`${host.host}/application/list`, {
+        .get(`${host.host}/application/list/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -285,7 +315,7 @@ export default new Vuex.Store({
     },
     getMyEvent({commit}) {
       axios
-      .get(`${host.host}/event/my`, {
+      .get(`${host.host}/event/my/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -300,7 +330,7 @@ export default new Vuex.Store({
     },
     getNewsList({commit}) {
       axios
-      .get(`${host.host}/news`, {
+      .get(`${host.host}/news/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -323,7 +353,22 @@ export default new Vuex.Store({
         .catch(function (e) {
           console.log(e);
         });
-    }
+    },
+    // getEventDetails({commit}, id) {
+    //   axios
+    //   .get(`${host.host}/news/`, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then(function (res) {
+    //     console.log(res);
+    //     commit("SET_EVENT_DETAIL", res.data);
+    //   })
+    //   .catch(function (e) {
+    //     console.log(e);
+    //   });
+    // }
   },
   getters: {
     getAuthState: (state) => state.authState,
@@ -337,6 +382,7 @@ export default new Vuex.Store({
     getMyAppeals: (state) => state.myAppeals,
     getMyEvents: (state) => state.myEvents,
     getNews: (state) => state.news,
-    getNewsDetail: (state) => state.newsDetails
+    getNewsDetail: (state) => state.newsDetails,
+    // getEventDetail: (state) => state.eventDetails
   },
 });

@@ -1,6 +1,13 @@
 .news {
     padding-top: 40px;
     padding-bottom: 68px;
+    &-page {
+        .container {
+            >img {
+                margin-top: 30px;
+            }
+        }
+    }
     // стили отсновной страницы новостей начало
     &-top {
         display: flex;
@@ -157,6 +164,7 @@
 
 @media (max-width: 1110px) {
     .news {
+        padding-top: 0;
         &-top {
             justify-content: center;
 
@@ -176,6 +184,12 @@
             
             &__content {
                 padding-right: 10px;
+            }
+        }
+        &-page {
+            padding-top: 0;
+            .container {
+                margin-top: 30px;
             }
         }
     }

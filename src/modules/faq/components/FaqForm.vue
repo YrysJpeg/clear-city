@@ -7,18 +7,18 @@
         <div class="form">
           <div>
             <p>{{ $t("forms.name") }}</p>
-            <input type="text" />
+            <input type="text" v-model="name"/>
           </div>
           <div>
-            <p>{{ $t("forms.lastname") }}</p>
-            <input type="text" />
+            <p>{{ $t("forms.phone") }}</p>
+            <input type="text" v-model="phone" v-mask="'+7 ### ### ## ##'"/>
           </div>
           <div>
             <p>{{ $t("faq.quest-text") }}</p>
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <textarea name="" class="form-message" id="" cols="30" v-model="message" rows="10"></textarea>
           </div>
         </div>
-        <button>{{ $t("forms.send") }}</button>
+        <button @click="sendMessage">{{ $t("forms.send") }}</button>
       </div>
       <div class="faq-form__right">
         <img src="../../../assets/img/faqform.svg" alt="" />
@@ -28,9 +28,33 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      name: '',
+      phone: '',
+      message: ''
+    }
+  },
+  methods: {
+    sendMessage() {
+      const data = {
+        "full_name": this.name,
+        "phone_number": this.phone,
+        "message": this.message
+      }
+      this.$store.dispatch('sendFeedback', data)
+      this.name = ''
+      this.phone = ''
+      this.message = ''
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../../../assets/css/faq";
+.form-message {
+  padding: 20px;
+}
 </style>

@@ -2,6 +2,7 @@
   <div :class="{ 'active-menu': menuState }" class="bar">
     <aside class="my-account-bar notranslate">
       <section class="my-account-user">
+        <go-back></go-back>
         <img :src="getProfile.avatar" alt="" />
         <p style="margin-top:10px">{{ getProfile.first_name }} {{ getProfile.last_name }}</p>
         <label class="avatar-label" for="avatar">
@@ -16,7 +17,7 @@
           <li><router-link to="/account/my-appeals">{{ $t("account.my-appeals") }}</router-link></li>
           <li><router-link to="/account/my-events">{{ $t("account.my-events") }}</router-link></li>
           <li><router-link to="/account/my-visit">{{ $t("account.my-help") }}</router-link></li>
-          <li>{{ $t("account.logut") }}</li>
+          <li @click="logout">{{ $t("account.logut") }}</li>
         </ul>
       </nav>
     </aside>
@@ -31,7 +32,10 @@
 </template>
 
 <script>
+import { removeCookie } from '../../../utils/cookie/cookies'
+import GoBack from '../../core/back/Go-back.vue';
 export default {
+  components: { GoBack },
   data() {
     return {
       menuState: false,
@@ -44,6 +48,11 @@ export default {
     },
   },
   methods: {
+    logout() {
+      removeCookie('test')
+      this.$store.dispatch('isAuthorize')
+      this.$router.push('/')
+    },
     sidebarActive(e) {
       let nav = document.querySelectorAll('.my-account-nav ul > li > a')
       console.log(nav, e);
@@ -73,7 +82,7 @@ export default {
   height: 50px;
   border-radius: 50%;
   background: #ebebeb;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   transform: rotate(-180deg);
@@ -91,5 +100,15 @@ export default {
 }
 .my-account-nav a {
   color: black;
+}
+.my-account-user {
+  img {
+    margin-top: 30px;
+  }
+}
+@media (max-width: 768px) {
+  .show-menu {
+    display: flex;
+  }
 }
 </style>
