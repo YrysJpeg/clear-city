@@ -106,7 +106,7 @@ export default {
   methods: {
     maps() {
       fetch(
-        `https://catalog.api.2gis.com/3.0/suggests?q=${this.val}&type=street,building,adm_div.living_area&fields=items.point&location=82.617712,49.949531&key=rurbbn3446`
+        `https://catalog.api.2gis.com/3.0/suggests?q=${this.val}&city_id=12807734210592770&fields=items.point&location=82.617712,49.949531&key=rurbbn3446`
       )
         .then((res) => res.json())
         .then((json) => {
