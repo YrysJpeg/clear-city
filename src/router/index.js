@@ -89,9 +89,9 @@ const routes = [
     path: "/account",
     name: "account",
     component: Account,
-    // meta: {
-    //   auth: true,
-    // },
+    meta: {
+      auth: true,
+    },
     children: [
       {
         path: "",
@@ -122,16 +122,16 @@ const router = new VueRouter({
   },
 });
 
-// router.beforeEach((to, from, next) => {
-//   const localUser = getCookie("access_token");
+router.beforeEach((to, from, next) => {
+  const localUser = getCookie("access_token");
 
-//   const requireAuth = to.matched.some((record) => record.meta.auth);
+  const requireAuth = to.matched.some((record) => record.meta.auth);
 
-//   if (requireAuth && !localUser) {
-//     next("/");
-//   } else {
-//     next();
-//   }
-// });
+  if (requireAuth && !localUser) {
+    next("/");
+  } else {
+    next();
+  }
+});
 
 export default router;
