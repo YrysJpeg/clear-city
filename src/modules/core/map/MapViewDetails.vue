@@ -13,28 +13,31 @@ export default {
     },
     height: {
       default: 400,
-    }
+    },
+    lat: {
+      default: "",
+    },
+    long: {
+      default: "",
+    },
   },
   data() {
     return {
       map: null,
+      longs: this.long,
+      lats: this.lat
     };
-  },
-  computed: {
-    getAllApplications() {
-      return this.$store.getters.getAllApplications;
-    },
   },
   mounted() {
     this.$refs.cap.style.width = this.width + "%";
     this.$refs.cap.style.height = this.height + "px";
-    this.map = new DG.map(this.$refs.cap, {
-        center: [49.949531, 82.617712],
+      this.map = new DG.map(this.$refs.cap, {
+        center: [this.lats, this.longs],
         zoom: 13,
         minZoom: 10,
         fullscreenControl: false,
       });
-      DG.marker([49.949531, 82.623576], {}).addTo(this.map);
+      DG.marker([this.lats, this.longs], {}).addTo(this.map).bindPopup('Вы кликнули по мне!');
   },
   beforeDestroy() {
     if (this.map) this.map.remove();

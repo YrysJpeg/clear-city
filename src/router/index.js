@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import { getCookie } from "../utils/cookie/cookies";
+import { getCookie } from "../utils/cookie/cookies";
 
 Vue.use(VueRouter);
 
@@ -121,7 +121,6 @@ const router = new VueRouter({
     return { x: 0, y: 0 };
   },
 });
-
 router.beforeEach((to, from, next) => {
   const localUser = getCookie("access_token");
 

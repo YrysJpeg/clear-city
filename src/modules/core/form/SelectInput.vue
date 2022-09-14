@@ -5,8 +5,8 @@
       <button :class="{ active: !state }" @click="state = false">Время</button>
     </div>
     <div class="pickers">
-      <v-time-picker format="24hr" v-model="time" v-if="!state"></v-time-picker>
-      <v-date-picker v-model="date" class="mt-4" v-if="state"></v-date-picker>
+      <v-time-picker @change="emitTime" format="24hr" v-model="time" v-if="!state"></v-time-picker>
+      <v-date-picker @change="emitDate" v-model="date" class="mt-4" v-if="state"></v-date-picker>
     </div>
   </div>
 </template>
@@ -20,6 +20,14 @@ export default {
       state: true,
     };
   },
+  methods: {
+    emitTime() {
+      this.$emit('time', this.time)
+    },
+    emitDate() {
+      this.$emit('date', this.date)
+    }
+  }
 };
 </script>
 
@@ -27,7 +35,6 @@ export default {
 .form {
   position: relative;
   top: -20px;
-  margin: auto;
   max-width: 290px;
 }
 .btns {
@@ -49,6 +56,11 @@ export default {
   }
   .active {
     background: #6dcf97;
+  }
+}
+@media (max-width: 768px) {
+  .form {
+    margin: auto;
   }
 }
 </style>

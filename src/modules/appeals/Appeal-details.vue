@@ -136,12 +136,12 @@
             </div>
           </div>
           <div class="details-gen-info-r">
-            <map-view
+            <map-view-details
               :lat="getApplicationData.latitude"
               :long="getApplicationData.longitude"
               width="100"
               height="280"
-            ></map-view>
+            ></map-view-details>
           </div>
         </section>
         <section class="details-comments" v-if="!switcher">
@@ -219,10 +219,10 @@
 </template>
 
 <script>
-import MapView from "../core/map/MapView.vue";
 import GoBack from '../core/back/Go-back.vue'
+import MapViewDetails from '../core/map/MapViewDetails.vue';
 export default {
-  components: { MapView, GoBack },
+  components: { GoBack, MapViewDetails },
   data() {
     return {
       switcher: true,

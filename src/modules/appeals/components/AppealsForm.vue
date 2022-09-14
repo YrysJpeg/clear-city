@@ -55,6 +55,10 @@
         </datalist>
       </div>
       <div>
+        <p>{{ $t("forms.short-text") }}</p>
+        <textarea name="" id="" cols="30" rows="10" v-model="message"></textarea>
+      </div>
+      <div>
         <file-input @image="loadImage"></file-input>
       </div>
       <button @click="createAppeals">{{ $t("forms.create-appeals") }}</button>
@@ -96,6 +100,7 @@ export default {
       phone: "",
       name: "",
       lastname: "",
+      message: ""
     };
   },
   computed: {
@@ -127,7 +132,7 @@ export default {
     createAppeals() {
       const data = {
         app_type: this.type,
-        message: "камеру убирай бля1",
+        message: this.message,
         first_name: this.name,
         last_name: this.lastname,
         patronymic: "none",

@@ -56,8 +56,10 @@
       </div>
       <div>
         <p>{{ $t("main.date-time") }}</p>
-        <div class="input" @click="stateDate = !stateDate"></div>
-        <select-input v-if="stateDate"></select-input>
+        <div class="input" @click="stateDate = !stateDate">
+          {{date}}, {{time}} <img v-if="stateDate" src="../../../assets/img/close.svg" alt="">
+        </div>
+        <select-input @time="getTimeEmit($event)" @date="getDateEmit($event)" v-if="stateDate"></select-input>
       </div>
       <div>
         <p>{{ $t("forms.short-text") }}</p>
@@ -98,17 +100,21 @@ export default {
       phone: "",
       val: "",
       mapResults: "",
+      date: "",
+      time: ""
     };
   },
   methods: {
     maps() {
       fetch(
-        `https://catalog.api.2gis.com/3.0/suggests?q=${this.val}&type=street,building,adm_div.living_area&fields=items.point&location=82.617712,49.949531&key=rurbbn3446`
+        `https://catalog.api.2gis.com/3.0/suggests?q=${this.val}&city_id=12807734210592770&fields=items.point&location=82.617712,49.949531&key=rurbbn3446`
       )
         .then((res) => res.json())
         .then((json) => {
           this.mapResults = json.result.items;
-          console.log(this.mapResults);
+          console.log(this.mapResults = json.result.items);
+          this.lat = this.mapResults[0].point.lat
+          this.long = this.mapResults[0].point.lon
         });
     },
     close() {
@@ -118,6 +124,12 @@ export default {
     createAppeals() {
       this.state = !this.state;
     },
+    getTimeEmit(x) {
+      this.time = x
+    },
+    getDateEmit(x) {
+      this.date = x
+    }
   },
 };
 </script>
@@ -135,6 +147,13 @@ textarea {
   height: 48px;
   background: #f6f6f6;
   border-radius: 10px;
+  display:flex;align-items:center;padding-left:10px;
+  position: relative;
+  img {
+    width: 15px;
+    position: absolute;
+    right: 10px;
+  }
 }
 datalist {
   width: 100%;
