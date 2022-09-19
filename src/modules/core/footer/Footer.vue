@@ -12,9 +12,9 @@
           <li>
             <router-link to="/faq">{{ $t("header.quest") }}</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to>{{ $t("header.help") }}</router-link>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <div class="social">
