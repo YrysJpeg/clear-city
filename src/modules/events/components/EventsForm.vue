@@ -44,14 +44,13 @@
         <p>{{ $t("forms.theme") }}</p>
         <input type="text" name="example" list="exampleList" />
         <datalist id="exampleList">
-          <option value="Свалка">Свалка</option>
-          <option value="Крупногабаритные отходы">
-            Крупногабаритные отходы
+          <option value="городской субботник">Городской субботник</option>
+          <option value="Акция по сбору пластика/перерабатываемых отходов">
+            Акция по сбору пластика/перерабатываемых отходов
           </option>
-          <option value="Переполненные контейнеры">
-            Переполненные контейнеры
+          <option value="озеленение города">
+            Озеленение города 
           </option>
-          <option value="Переполненные урны">Переполненные урны</option>
         </datalist>
       </div>
       <div>

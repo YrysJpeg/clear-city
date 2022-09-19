@@ -139,6 +139,7 @@
             <map-view-details
               :lat="getApplicationData.latitude"
               :long="getApplicationData.longitude"
+              :key="getApplicationData.id"
               width="100"
               height="280"
             ></map-view-details>

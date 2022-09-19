@@ -300,7 +300,7 @@ export default new Vuex.Store({
     },
     getMyAppeal({commit}) {
       axios
-        .get(`${host.host}/application/list/`, {
+        .get(`${host.host}/application/list`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -315,7 +315,7 @@ export default new Vuex.Store({
     },
     getMyEvent({commit}) {
       axios
-      .get(`${host.host}/event/my/`, {
+      .get(`${host.host}/event/my`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

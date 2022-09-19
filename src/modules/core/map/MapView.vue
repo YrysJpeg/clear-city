@@ -13,17 +13,13 @@ export default {
     },
     height: {
       default: 400,
-    }
+    },
+    appeals: null
   },
   data() {
     return {
       map: null,
-    };
-  },
-  computed: {
-    getAllApplications() {
-      return this.$store.getters.getAllApplications;
-    },
+    }
   },
   mounted() {
     this.$refs.cap.style.width = this.width + "%";
@@ -34,7 +30,15 @@ export default {
         minZoom: 10,
         fullscreenControl: false,
       });
-      DG.marker([49.949531, 82.623576], {}).addTo(this.map);
+      for (let item of this.appeals) {
+        DG.marker([item.latitude, item.longitude], {}).addTo(this.map).bindPopup(`
+          <a
+            style="color:#fff;"
+            href="/appeal-details/${item.id}"
+            class="details notranslate"
+            >${item.address}</a>
+        `);
+      }
   },
   beforeDestroy() {
     if (this.map) this.map.remove();

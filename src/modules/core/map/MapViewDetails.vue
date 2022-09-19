@@ -32,12 +32,12 @@ export default {
     this.$refs.cap.style.width = this.width + "%";
     this.$refs.cap.style.height = this.height + "px";
       this.map = new DG.map(this.$refs.cap, {
-        center: [this.lats, this.longs],
-        zoom: 13,
-        minZoom: 10,
-        fullscreenControl: false,
-      });
-      DG.marker([this.lats, this.longs], {}).addTo(this.map).bindPopup('Вы кликнули по мне!');
+      center: [this.lats, this.longs],
+      zoom: 13,
+      minZoom: 10,
+      fullscreenControl: false,
+    });
+    DG.marker([this.lats, this.longs], {}).addTo(this.map)
   },
   beforeDestroy() {
     if (this.map) this.map.remove();

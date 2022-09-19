@@ -1,7 +1,7 @@
 .footer {
     background: #008037;
     padding-top: 40px;
-    padding-bottom: 151px;
+    padding-bottom: 50px;
 
     .container {
         display: flex;
@@ -17,7 +17,16 @@
         li {
             margin-bottom: 20px;
         }
-
+        &-contact {
+            display: flex !important;
+            flex-direction: column;
+            margin-left: 50px;
+            a {
+                margin-bottom: 10px;
+                color: #fff;
+                font-family: 'Roboto';
+            }
+        }
         a {
             font-family: 'Roboto';
             font-weight: 400;
@@ -61,5 +70,16 @@
             margin-top: 30px;
             margin-bottom: 30px;
         }
+    }
+}
+.develope {
+    width: fit-content;
+    color: #fff;
+    font-family: 'Roboto';
+    font-size: 14px;
+    a {
+        margin-left: 5px;
+        color: #fff;
+        text-decoration: underline;
     }
 }

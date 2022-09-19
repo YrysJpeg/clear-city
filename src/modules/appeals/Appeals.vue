@@ -6,8 +6,7 @@
         <div class="start-top__left">
           <h3>Сделаем Усть-Каменогорск чище вместе</h3>
           <p>
-            Сервис созданный для улучшения экологии города и предотвращения
-            загрязнении.
+            Наш сервис является помощником в подаче официальных обращений в государственные органы для решения городских проблем с мусором. Вам нужно только заполнить форму остальное мы сделаем за Вас. 
           </p>
           <button class="notranslate" @click="close">
             {{ $t("main.create-appeals") }}
@@ -114,12 +113,13 @@
         </div>
       </div>
       <map-view
-        appeals="getAllApplications"
+        :appeals="getAllApplications"
         v-if="state"
+        :key="clickState"
         width="100"
         height="500"
       ></map-view>
-      <button class="show-more notranslate">{{ $t("main.load-more") }}</button>
+      <button @click="showMore" class="show-more notranslate">{{ $t("main.load-more") }}</button>
     </div>
   </div>
 </template>
@@ -137,12 +137,16 @@ export default {
       form: false,
       events: "",
       state: false,
+      clickState: 0
     };
   },
   methods: {
     close() {
       this.form = !this.form;
     },
+    showMore() {
+      this.clickState += 1
+    }
   },
   computed: {
     getAllApplications() {

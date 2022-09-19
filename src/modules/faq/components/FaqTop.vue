@@ -33,32 +33,40 @@ export default {
       items: [
         {
           id: 1,
-          title: "Sample Title 1",
-          content: "Lorem ipsum dolor sit amet",
+          title: "Как подать обращение",
+          content: "На странице обращений нажмите на кнопку 'создать обращение'. После заполните всю необходимую информацию и нажать на кнопку создать обращение. В скором времени обращение отобразиться на сайте",
           isExpand: false,
           computedHeight: 0,
         },
         {
           id: 2,
-          title: "Sample Title 2",
+          title: "Как я могу отследить исполнение обращения",
           content:
-            "Felis eget nunc lobortis mattis aliquam faucibus purus in massa. Maecenas volutpat blandit aliquam etiam.",
+            "На странице конкретного обращения вы можете видеть статус этого обращения",
           isExpand: false,
           computedHeight: 0,
         },
         {
           id: 3,
-          title: "Sample Title 3",
+          title: "Могу ли я поддержать уже поданное обращение",
           content:
-            "Pretium quam vulputate dignissim suspendisse. Tristique senectus et netus et. Vulputate ut pharetra sit amet aliquam. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut morbi tincidunt augue interdum velit euismod in pellentesque massa.",
+            "Да, можете. На странице обращения, которое вы хотите поддержать есть кнопка 'Поддержка'",
           isExpand: false,
           computedHeight: 0,
         },
         {
           id: 4,
-          title: "Sample Title 4",
+          title: "Видят ли пользователи мои данные",
           content:
-            "Odio euismod lacinia at quis risus sed vulputate. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Proin sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Ut pharetra sit amet aliquam id diam maecenas. Enim ut tellus elementum sagittis vitae et leo. Egestas fringilla phasellus faucibus scelerisque eleifend. Odio euismod lacinia at quis risus sed vulputate odio.",
+            "Пользователи могу видеть данные организатора мероприятий и обращений для связи с инициатором. Во всех остальных случаях ваши данные не доступны.",
+          isExpand: false,
+          computedHeight: 0,
+        },
+        {
+          id: 5,
+          title: "Могу ли я подать обращение не по теме мусора в городе",
+          content:
+            "Нет, сайт предполагает только обращения по теме вывоза и утилизации ТБО , несанкционированных свалок на территориях г. Усть-Каменогорск. В дальнейшем география, возможно, будет расширена.",
           isExpand: false,
           computedHeight: 0,
         },

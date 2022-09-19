@@ -1,6 +1,33 @@
 .about {
     padding-top: 53px;
     padding-bottom: 150px;
+    &-bottom {
+        margin-top: 50px;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 130%;
+        color: #000000;
+    }
+    &-partners {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        flex-wrap: wrap;
+        margin-top: 30px;
+
+        div {
+            min-width: 23%;
+            height: 200px;
+            text-align: center;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+    }
     .container {
         display: flex;
         justify-content: space-between;
