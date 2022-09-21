@@ -6,7 +6,10 @@
         <div class="start-top__left">
           <h3>Сделаем Усть-Каменогорск чище вместе</h3>
           <p>
-            Наш сервис позволяет Вам организовывать городские экологические мероприятия. Заполните форму, опишите цель и формат мероприятия и поделитесь им социальных сетях, чтобы горожане смогли поддержать Вас и принять участие.
+            Наш сервис позволяет Вам организовывать городские экологические
+            мероприятия. Заполните форму, опишите цель и формат мероприятия и
+            поделитесь им социальных сетях, чтобы горожане смогли поддержать Вас
+            и принять участие.
           </p>
           <button class="notranslate" @click="close">
             {{ $t("main.create-events") }}
@@ -21,7 +24,7 @@
         <div class="start-bottom__head notranslate">
           <div>
             <input type="text" placeholder="Поиск" />
-            <img src="../../assets/img/search.svg" alt="">
+            <img src="../../assets/img/search.svg" alt="" />
           </div>
           <button class="search">{{ $t("main.find") }}</button>
           <button
@@ -53,7 +56,11 @@
         {{ $t("main.length") }}: <span>{{ getEventList.length }}</span>
       </div>
       <div class="start-wrapper" v-if="!state">
-        <div class="start-wrapper__card" v-for="(item, index) of getEventList" :key="index">
+        <div
+          class="start-wrapper__card"
+          v-for="(item, index) of getEventList"
+          :key="index"
+        >
           <div class="start-wrapper__card-img notranslate">
             <button v-if="true" class="added">{{ $t("main.ago") }}</button>
             <button v-if="false" class="moderation">
@@ -76,15 +83,15 @@
           <div class="info">
             Место проведения: <span>{{ item.address }}</span>
           </div>
-          <router-link 
+          <router-link
             :to="{
               path: `/event-details/${item.id}`,
               params: { id: item.id },
-            }" 
+            }"
             class="details"
-            >
+          >
             {{ $t("main.details") }}
-            </router-link>
+          </router-link>
         </div>
       </div>
       <map-view v-if="state" width="100" height="500"></map-view>
@@ -106,11 +113,11 @@ export default {
   },
   computed: {
     getEventList() {
-      return this.$store.getters.getEvents
-    }
+      return this.$store.getters.getEvents;
+    },
   },
   created() {
-    this.$store.dispatch('getEventList')
+    this.$store.dispatch("getEventList");
   },
   methods: {
     close() {
@@ -126,7 +133,7 @@ export default {
   color: #008037;
 }
 .start-bottom__head {
-  >div {
+  > div {
     position: relative;
 
     img {

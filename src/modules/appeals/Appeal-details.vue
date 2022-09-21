@@ -153,7 +153,11 @@
               <a href="#">{{ $t("details.regged") }}.</a>
             </p>
             <input type="text" :placeholder="$t('details.send-comment')" />
-            <input type="button" :disabled="!getIsAuth" :value="$t('forms.send')" />
+            <input
+              type="button"
+              :disabled="!getIsAuth"
+              :value="$t('forms.send')"
+            />
           </div>
           <div class="details-comments-mid">
             <div class="details-comment">
@@ -193,7 +197,11 @@
       <section class="details-appeals">
         <h4 class="notranslate">{{ $t("details.copy-appeal") }}</h4>
         <div class="details-appeals-row">
-          <div class="details-appeals-card details-card" v-for="(item, index) of getSimilarApp" :key="index">
+          <div
+            class="details-appeals-card details-card"
+            v-for="(item, index) of getSimilarApp"
+            :key="index"
+          >
             <div class="details-card-img">
               <img :src="item.photo_url" alt="" v-if="item.photo_url" />
               <img src="../../assets/img/Rectangle 11.png" alt="" v-else />
@@ -220,8 +228,8 @@
 </template>
 
 <script>
-import GoBack from '../core/back/Go-back.vue'
-import MapViewDetails from '../core/map/MapViewDetails.vue';
+import GoBack from "../core/back/Go-back.vue";
+import MapViewDetails from "../core/map/MapViewDetails.vue";
 export default {
   components: { GoBack, MapViewDetails },
   data() {
@@ -243,7 +251,7 @@ export default {
     this.$store.dispatch("getApplicationObject", this.$route.params.id);
   },
   mounted() {
-    this.$store.dispatch('similarApp', this.getApplicationData.app_type)
+    this.$store.dispatch("similarApp", this.getApplicationData.app_type);
   },
   computed: {
     getApplicationData() {
@@ -261,11 +269,11 @@ export default {
       }
     },
     getSimilarApp() {
-      return this.$store.getters.getSimilarApp
+      return this.$store.getters.getSimilarApp;
     },
     getIsAuth() {
-      return this.$store.getters.getIsAuth
-    }
+      return this.$store.getters.getIsAuth;
+    },
   },
   methods: {
     sharePage() {
@@ -276,7 +284,7 @@ export default {
       });
     },
     goPage(item) {
-      this.$router.push({name: 'appeal-details', params: { id: item.id }})
+      this.$router.push({ name: "appeal-details", params: { id: item.id } });
     },
     openImage() {
       this.imageState = true;

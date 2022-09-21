@@ -37,7 +37,7 @@ export default {
       let test = (document.createElement("span").innerHTML = "");
       document.body.append(test);
     }, 500);
-    this.$store.dispatch('isAuthorize')
+    this.$store.dispatch("isAuthorize");
   },
 };
 </script>

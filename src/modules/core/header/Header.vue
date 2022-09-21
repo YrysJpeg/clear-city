@@ -87,8 +87,7 @@ export default {
   },
   computed: {
     checkAuth() {
-      return this.$store.getters.getIsAuth
-
+      return this.$store.getters.getIsAuth;
     },
   },
   methods: {

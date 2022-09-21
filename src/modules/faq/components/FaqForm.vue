@@ -7,15 +7,22 @@
         <div class="form">
           <div>
             <p>{{ $t("forms.name") }}</p>
-            <input type="text" v-model="name"/>
+            <input type="text" v-model="name" />
           </div>
           <div>
             <p>{{ $t("forms.phone") }}</p>
-            <input type="text" v-model="phone" v-mask="'+7 ### ### ## ##'"/>
+            <input type="text" v-model="phone" v-mask="'+7 ### ### ## ##'" />
           </div>
           <div>
             <p>{{ $t("faq.quest-text") }}</p>
-            <textarea name="" class="form-message" id="" cols="30" v-model="message" rows="10"></textarea>
+            <textarea
+              name=""
+              class="form-message"
+              id=""
+              cols="30"
+              v-model="message"
+              rows="10"
+            ></textarea>
           </div>
         </div>
         <button @click="sendMessage">{{ $t("forms.send") }}</button>
@@ -31,24 +38,24 @@
 export default {
   data() {
     return {
-      name: '',
-      phone: '',
-      message: ''
-    }
+      name: "",
+      phone: "",
+      message: "",
+    };
   },
   methods: {
     sendMessage() {
       const data = {
-        "full_name": this.name,
-        "phone_number": this.phone,
-        "message": this.message
-      }
-      this.$store.dispatch('sendFeedback', data)
-      this.name = ''
-      this.phone = ''
-      this.message = ''
-    }
-  }
+        full_name: this.name,
+        phone_number: this.phone,
+        message: this.message,
+      };
+      this.$store.dispatch("sendFeedback", data);
+      this.name = "";
+      this.phone = "";
+      this.message = "";
+    },
+  },
 };
 </script>
 

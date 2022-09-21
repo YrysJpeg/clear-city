@@ -1,7 +1,10 @@
 <template>
   <div class="news-bottom">
     <div v-for="(item, index) of getNews" :key="index">
-      <router-link :to="{ path: `/news-details/${item.id}`, params: {id: item.id} }" class="news-card">
+      <router-link
+        :to="{ path: `/news-details/${item.id}`, params: { id: item.id } }"
+        class="news-card"
+      >
         <img :src="item.photo_url" alt="" />
         <div class="news-card__layer"></div>
         <div class="news-card__content">
@@ -17,9 +20,9 @@
 export default {
   computed: {
     getNews() {
-      return this.$store.getters.getNews
-    }
-  }
+      return this.$store.getters.getNews;
+    },
+  },
 };
 </script>
 

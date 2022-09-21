@@ -9,7 +9,7 @@
 <script>
 import FaqTop from "../faq/components/FaqTop.vue";
 import FaqForm from "../faq/components/FaqForm.vue";
-import GoBack from '../core/back/Go-back.vue';
+import GoBack from "../core/back/Go-back.vue";
 export default {
   components: { FaqTop, FaqForm, GoBack },
 };

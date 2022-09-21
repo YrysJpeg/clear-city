@@ -4,19 +4,35 @@
       <section class="my-account-user">
         <go-back></go-back>
         <img :src="getProfile.avatar" alt="" />
-        <p style="margin-top:10px">{{ getProfile.first_name }} {{ getProfile.last_name }}</p>
+        <p style="margin-top: 10px">
+          {{ getProfile.first_name }} {{ getProfile.last_name }}
+        </p>
         <label class="avatar-label" for="avatar">
-          <img src="../../../assets/img/avatar-add.svg" alt="">
+          <img src="../../../assets/img/avatar-add.svg" alt="" />
         </label>
-        <input id="avatar" type="file" @change="photoUpdate" v-show="false"/>
+        <input id="avatar" type="file" @change="photoUpdate" v-show="false" />
       </section>
 
       <nav class="my-account-nav">
         <ul>
-          <li><router-link to="/account">{{ $t("account.my-acc") }}</router-link></li>
-          <li><router-link to="/account/my-appeals">{{ $t("account.my-appeals") }}</router-link></li>
-          <li><router-link to="/account/my-events">{{ $t("account.my-events") }}</router-link></li>
-          <li><router-link to="/account/my-visit">{{ $t("account.my-help") }}</router-link></li>
+          <li @click="menuState = false">
+            <router-link to="/account">{{ $t("account.my-acc") }}</router-link>
+          </li>
+          <li @click="menuState = false">
+            <router-link to="/account/my-appeals">{{
+              $t("account.my-appeals")
+            }}</router-link>
+          </li>
+          <li @click="menuState = false">
+            <router-link to="/account/my-events">{{
+              $t("account.my-events")
+            }}</router-link>
+          </li>
+          <li @click="menuState = false">
+            <router-link to="/account/my-visit">{{
+              $t("account.my-help")
+            }}</router-link>
+          </li>
           <li @click="logout">{{ $t("account.logut") }}</li>
         </ul>
       </nav>
@@ -32,8 +48,8 @@
 </template>
 
 <script>
-import { removeCookie } from '../../../utils/cookie/cookies'
-import GoBack from '../../core/back/Go-back.vue';
+import { removeCookie } from "../../../utils/cookie/cookies";
+import GoBack from "../../core/back/Go-back.vue";
 export default {
   components: { GoBack },
   data() {
@@ -49,23 +65,23 @@ export default {
   },
   methods: {
     logout() {
-      removeCookie('test')
-      this.$store.dispatch('isAuthorize')
-      this.$router.push('/')
+      removeCookie("test");
+      this.$store.dispatch("isAuthorize");
+      this.$router.push("/");
     },
     sidebarActive(e) {
-      let nav = document.querySelectorAll('.my-account-nav ul > li > a')
+      let nav = document.querySelectorAll(".my-account-nav ul > li > a");
       console.log(nav, e);
     },
     photoUpdate(e) {
       this.photo = e.target.files;
       const formData = new FormData();
       for (let i = 0; i < this.photo.length; i++) {
-        let file = this.photo[i]
-        formData.append('file', file);
+        let file = this.photo[i];
+        formData.append("file", file);
       }
       console.log(formData);
-      this.$store.dispatch('updateAvatar', formData)
+      this.$store.dispatch("updateAvatar", formData);
     },
   },
 };

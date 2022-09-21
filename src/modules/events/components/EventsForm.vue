@@ -11,11 +11,11 @@
       <h4>{{ $t("forms.data") }}</h4>
       <div>
         <p>{{ $t("forms.name") }}</p>
-        <input type="text" />
+        <input type="text" :value="getUserInfo.first_name" />
       </div>
       <div>
         <p>{{ $t("forms.lastname") }}</p>
-        <input type="text" />
+        <input type="text" :value="getUserInfo.last_name" />
       </div>
       <div>
         <p>{{ $t("forms.phone") }}</p>
@@ -42,32 +42,41 @@
       </div>
       <div>
         <p>{{ $t("forms.theme") }}</p>
-        <input type="text" name="example" list="exampleList" />
+        <input type="text" name="example" v-model="type" list="exampleList" />
         <datalist id="exampleList">
           <option value="городской субботник">Городской субботник</option>
           <option value="Акция по сбору пластика/перерабатываемых отходов">
             Акция по сбору пластика/перерабатываемых отходов
           </option>
-          <option value="озеленение города">
-            Озеленение города 
-          </option>
+          <option value="озеленение города">Озеленение города</option>
         </datalist>
       </div>
       <div>
         <p>{{ $t("main.date-time") }}</p>
         <div class="input" @click="stateDate = !stateDate">
-          {{date}}, {{time}} <img v-if="stateDate" src="../../../assets/img/close.svg" alt="">
+          {{ date }}, {{ time }}
+          <img v-if="stateDate" src="../../../assets/img/close.svg" alt="" />
         </div>
-        <select-input @time="getTimeEmit($event)" @date="getDateEmit($event)" v-if="stateDate"></select-input>
+        <select-input
+          @time="getTimeEmit($event)"
+          @date="getDateEmit($event)"
+          v-if="stateDate"
+        ></select-input>
       </div>
       <div>
         <p>{{ $t("forms.short-text") }}</p>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <textarea
+          name=""
+          id=""
+          v-model="description"
+          cols="30"
+          rows="10"
+        ></textarea>
       </div>
       <div>
-        <file-input></file-input>
+        <file-input @image="loadImage"></file-input>
       </div>
-      <button @click="createAppeals">{{ $t("forms.create-events") }}</button>
+      <button @click="createEvents">{{ $t("forms.create-events") }}</button>
     </div>
     <div v-if="!state" class="appeals-complete">
       <img
@@ -96,12 +105,24 @@ export default {
     return {
       state: true,
       stateDate: false,
-      phone: "",
+      img: "",
+      type: "",
       val: "",
       mapResults: "",
+      phone: "",
       date: "",
-      time: ""
+      time: "",
+      address: "",
+      description: "",
     };
+  },
+  computed: {
+    getIsAuth() {
+      return this.$store.getters.getIsAuth;
+    },
+    getUserInfo() {
+      return this.$store.getters.getProfile;
+    },
   },
   methods: {
     maps() {
@@ -111,24 +132,48 @@ export default {
         .then((res) => res.json())
         .then((json) => {
           this.mapResults = json.result.items;
-          console.log(this.mapResults = json.result.items);
-          this.lat = this.mapResults[0].point.lat
-          this.long = this.mapResults[0].point.lon
+          console.log((this.mapResults = json.result.items));
+          this.lat = this.mapResults[0].point.lat;
+          this.long = this.mapResults[0].point.lon;
         });
     },
     close() {
       this.state = true;
       this.$emit("close");
     },
-    createAppeals() {
-      this.state = !this.state;
+    loadImage(data) {
+      this.img = data;
+    },
+    createEvents() {
+      // this.state = !this.state;
+      const data = {
+        app_type: this.type,
+        description: this.description,
+        organizer_info: this.phone,
+        latitude: this.lat,
+        longitude: this.long,
+        address: this.val,
+        document_url: this.img,
+        date: this.date,
+        time: this.time,
+      };
+      if (this.getIsAuth) {
+        this.$store.dispatch("createEvent", data);
+      } else {
+        this.$notify({
+          type: "warn",
+          title: "Внимание",
+          text: "Создать мероприятие может только авторизованный пользователь",
+          duration: 10000,
+        });
+      }
     },
     getTimeEmit(x) {
-      this.time = x
+      this.time = x;
     },
     getDateEmit(x) {
-      this.date = x
-    }
+      this.date = x;
+    },
   },
 };
 </script>
@@ -146,7 +191,9 @@ textarea {
   height: 48px;
   background: #f6f6f6;
   border-radius: 10px;
-  display:flex;align-items:center;padding-left:10px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
   position: relative;
   img {
     width: 15px;

@@ -46,23 +46,23 @@ export default new Vuex.Store({
       video_url: "",
     },
     eventDetails: {
-        id:  "",
-        address:  "",
-        description:  "",
-        date:  "",
-        time:  "",
-        organizer_info: "",
-        document_url:  "",
-        longitude:  null,
-        latitude:  null,
-        user_id:  "",
-        created_date: ""
+      id: "",
+      address: "",
+      description: "",
+      date: "",
+      time: "",
+      organizer_info: "",
+      document_url: "",
+      longitude: null,
+      latitude: null,
+      user_id: "",
+      created_date: "",
     },
     similarApplication: "",
     events: [],
     myAppeals: [],
     myEvents: [],
-    news: '',
+    news: "",
     newsDetails: {
       id: "",
       title: "",
@@ -70,8 +70,8 @@ export default new Vuex.Store({
       description: "",
       photo_url: "",
       author_id: "",
-      created_date: ""
-    }
+      created_date: "",
+    },
   },
   mutations: {
     SET_AUTH_STATE(state, boolean) {
@@ -99,22 +99,22 @@ export default new Vuex.Store({
       state.similarApplication = data;
     },
     SET_IS_AUTH(state, bool) {
-      state.isAuth = bool
+      state.isAuth = bool;
     },
     SET_EVENTS(state, data) {
-      state.events = data
+      state.events = data;
     },
     SET_MY_APPEAL(state, data) {
-      state.myAppeals = data
+      state.myAppeals = data;
     },
     SET_MY_EVENT(state, data) {
-      state.myEvents = data
+      state.myEvents = data;
     },
     SET_NEWS(state, data) {
-      state.news = data
+      state.news = data;
     },
     SET_NEWS_DETAILS(state, data) {
-      state.newsDetails = data
+      state.newsDetails = data;
     },
     // SET_EVENT_DETAIL(state, data) {
     //   state.eventDetails = data
@@ -150,24 +150,24 @@ export default new Vuex.Store({
           console.error(e);
         });
     },
-    isAuthorize({commit}) {
-      if (getCookie('access_token')) {
-        commit('SET_IS_AUTH', true)
+    isAuthorize({ commit }) {
+      if (getCookie("access_token")) {
+        commit("SET_IS_AUTH", true);
       } else {
-        commit('SET_IS_AUTH', false)
+        commit("SET_IS_AUTH", false);
       }
     },
-    login({commit}, payload) {
+    login({ commit }, payload) {
       axios
         .post(`${host.host}/auth/login`, payload, {
-          headers : {
-            'Content-Type': 'application/json'
-          }
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
         .then((res) => {
           setCookie("access_token", res.data.access_token, { expires: 1 });
           setCookie("refresh_token", res.data.refresh_token, { expires: 1 });
-          commit('SET_IS_AUTH', true)
+          commit("SET_IS_AUTH", true);
         })
         .catch((e) => {
           console.error(e);
@@ -197,18 +197,37 @@ export default new Vuex.Store({
           console.log(res);
         });
     },
+    createEvent(_, data) {
+      axios
+        .post(`${host.host}/event`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.error(e);
+          Vue.notify({
+            type: "error",
+            title: "Внимание",
+            text: "Создать мероприятие может только авторизованный пользователь",
+            duration: 10000,
+          });
+        });
+    },
     createAppeals(_, data) {
-      let mainData = data
-      delete mainData['photo_url']
-      return axios
-        .post(`${host.host}/application/`, mainData)
-        
+      let mainData = data;
+      delete mainData["photo_url"];
+      return axios.post(`${host.host}/application/`, mainData);
     },
     createAppealsAuth(_, data) {
       axios
         .post(`${host.host}/application/create`, data, {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         })
@@ -247,24 +266,36 @@ export default new Vuex.Store({
       axios
         .post(`${host.host}/feedback/`, data, {
           headers: {
-          'Accept': '*/*',
-          'Content-Type': 'application/json',
+            Accept: "*/*",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
           console.log(res);
+          Vue.notify({
+            type: "success",
+            title: "Завершено",
+            text: "Запрос отправлен",
+            duration: 10000,
+          });
         })
         .catch((e) => {
           console.error(e);
+          Vue.notify({
+            type: "error",
+            title: "Ошибка запроса",
+            text: "Запрос не отправлен",
+            duration: 10000,
+          });
         });
     },
-    similarApp({commit}, type) {
+    similarApp({ commit }, type) {
       axios
         .get(`${host.host}/application/type?type=${type}`)
         .then(function (res) {
           console.log(res.data);
-          let random = res.data.sort(() => 0.5 - Math.random())
+          let random = res.data.sort(() => 0.5 - Math.random());
           let selected = random.slice(0, 3);
           commit("SET_SIMILAR_APP", selected);
         })
@@ -281,9 +312,23 @@ export default new Vuex.Store({
         })
         .then((res) => {
           console.log(res);
+          Vue.notify({
+            type: "success",
+            title: "Завершено",
+            text: "Фото обновлено",
+            duration: 10000,
+          });
+        })
+        .catch(() => {
+          Vue.notify({
+            type: "error",
+            title: "Ошибка запроса",
+            text: "Не удалось обновить фото",
+            duration: 10000,
+          });
         });
     },
-    getEventList({commit}) {
+    getEventList({ commit }) {
       axios
         .get(`${host.host}/event/`, {
           headers: {
@@ -298,7 +343,7 @@ export default new Vuex.Store({
           console.log(e);
         });
     },
-    getMyAppeal({commit}) {
+    getMyAppeal({ commit }) {
       axios
         .get(`${host.host}/application/list`, {
           headers: {
@@ -313,37 +358,37 @@ export default new Vuex.Store({
           console.log(e);
         });
     },
-    getMyEvent({commit}) {
+    getMyEvent({ commit }) {
       axios
-      .get(`${host.host}/event/my`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(function (res) {
-        console.log(res);
-        commit("SET_MY_EVENT", res.data);
-      })
-      .catch(function (e) {
-        console.log(e);
-      });
+        .get(`${host.host}/event/my`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(function (res) {
+          console.log(res);
+          commit("SET_MY_EVENT", res.data);
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
     },
-    getNewsList({commit}) {
+    getNewsList({ commit }) {
       axios
-      .get(`${host.host}/news/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(function (res) {
-        console.log(res);
-        commit("SET_NEWS", res.data);
-      })
-      .catch(function (e) {
-        console.log(e);
-      });
+        .get(`${host.host}/news/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(function (res) {
+          console.log(res);
+          commit("SET_NEWS", res.data);
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
     },
-    getNewsDetails({commit}, id) {
+    getNewsDetails({ commit }, id) {
       axios
         .get(`${host.host}/news/id?id=${id}`)
         .then(function (res) {
@@ -352,6 +397,32 @@ export default new Vuex.Store({
         })
         .catch(function (e) {
           console.log(e);
+        });
+    },
+    appealEdit(_, id, data) {
+      axios
+        .put(`${host.host}/application?id=${id}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          Vue.notify({
+            type: "success",
+            title: "Завершено",
+            text: "Данные обновлены",
+            duration: 10000,
+          });
+        })
+        .catch(() => {
+          Vue.notify({
+            type: "error",
+            title: "Ошибка запроса",
+            text: "Ошибка обновления данных",
+            duration: 10000,
+          });
         });
     },
     // getEventDetails({commit}, id) {

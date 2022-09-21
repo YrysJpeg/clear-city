@@ -49,14 +49,18 @@
           <option value="переполненные контейнеры">
             Переполненные контейнеры
           </option>
-          <option value="переполненные урны ">
-            переполненные урны
-          </option>
+          <option value="переполненные урны ">переполненные урны</option>
         </datalist>
       </div>
       <div>
         <p>{{ $t("forms.short-text") }}</p>
-        <textarea name="" id="" cols="30" rows="10" v-model="message"></textarea>
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          v-model="message"
+        ></textarea>
       </div>
       <div>
         <file-input @image="loadImage"></file-input>
@@ -100,13 +104,13 @@ export default {
       phone: "",
       name: "",
       lastname: "",
-      message: ""
+      message: "",
     };
   },
   computed: {
     getIsAuth() {
-      return this.$store.getters.getIsAuth
-    }
+      return this.$store.getters.getIsAuth;
+    },
   },
   methods: {
     maps() {
@@ -116,9 +120,9 @@ export default {
         .then((res) => res.json())
         .then((json) => {
           this.mapResults = json.result.items;
-          console.log(this.mapResults = json.result.items);
-          this.lat = this.mapResults[0].point.lat
-          this.long = this.mapResults[0].point.lon
+          console.log((this.mapResults = json.result.items));
+          this.lat = this.mapResults[0].point.lat;
+          this.long = this.mapResults[0].point.lon;
         });
     },
     close() {
@@ -140,36 +144,36 @@ export default {
         latitude: this.lat,
         longitude: this.long,
         address: this.val,
-        photo_url: this.img
+        photo_url: this.img,
       };
-      console.log(data);
       if (this.getIsAuth) {
-        this.$store.dispatch("createAppealsAuth", data)
-          .then(res => {
+        this.$store
+          .dispatch("createAppealsAuth", data)
+          .then((res) => {
             let data = {
               res: res.data.id,
-              formData: this.img
-            }
-            console.log(data);
-            this.$store.dispatch('uploadPhoto', data)
-            this.state = !this.state
+              formData: this.img,
+            };
+            this.$store.dispatch("uploadPhoto", data);
+            this.state = !this.state;
           })
-          .catch(e => {
+          .catch((e) => {
             console.log(e);
-          })
+          });
       } else {
-        this.$store.dispatch("createAppeals", data)
-          .then(res => {
+        this.$store
+          .dispatch("createAppeals", data)
+          .then((res) => {
             let data = {
               res: res.data.id,
-              formData: this.img
-            }
-            this.$store.dispatch('uploadPhoto', data)
-            this.state = !this.state
+              formData: this.img,
+            };
+            this.$store.dispatch("uploadPhoto", data);
+            this.state = !this.state;
           })
-          .catch(e => {
+          .catch((e) => {
             console.log(e);
-          })
+          });
       }
     },
   },

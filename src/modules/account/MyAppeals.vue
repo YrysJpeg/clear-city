@@ -35,14 +35,16 @@
               </p>
             </div>
             <div class="cnt" v-if="getMyAppeal.length !== 0">
-              <figure class="my-account-card card" v-for="(item, index) of getMyAppeal" :key="index">
+              <figure
+                class="my-account-card card"
+                v-for="(item, index) of getMyAppeal"
+                :key="index"
+              >
                 <div class="card-left">
-                  <img
-                    class="card-img"
-                    :src="item.photo_url"
-                    alt=""
-                  />
-                  <figcaption class="card-status">{{ item.app_status }}</figcaption>
+                  <img class="card-img" :src="item.photo_url" alt="" />
+                  <figcaption class="card-status">
+                    {{ item.app_status }}
+                  </figcaption>
                 </div>
 
                 <div class="card-right">
@@ -52,8 +54,13 @@
                   <p class="card-p">Дата создания: {{ item.created_date }}</p>
 
                   <div class="card-btns notranslate">
-                    <button @click="appealDetails(item)" class="card-btn">{{ $t("main.details") }}</button>
-                    <button class="card-btn card-btn--s">
+                    <button @click="appealDetails(item)" class="card-btn">
+                      {{ $t("main.details") }}
+                    </button>
+                    <button
+                      @click="appealEdit(item)"
+                      class="card-btn card-btn--s"
+                    >
                       {{ $t("account.edit-appeal") }}
                     </button>
                   </div>
@@ -71,17 +78,20 @@
 export default {
   computed: {
     getMyAppeal() {
-      return this.$store.getters.getMyAppeals
-    }
+      return this.$store.getters.getMyAppeals;
+    },
   },
   created() {
-    this.$store.dispatch('getMyAppeal')
+    this.$store.dispatch("getMyAppeal");
   },
   methods: {
     appealDetails(item) {
-      this.$router.push({name: 'appeal-details', params: { id: item.id }})
-    }
-  }
+      this.$router.push({ name: "appeal-details", params: { id: item.id } });
+    },
+    appealEdit(item) {
+      this.$router.push({ name: "appeal-edit", params: { id: item.id } });
+    },
+  },
 };
 </script>
 

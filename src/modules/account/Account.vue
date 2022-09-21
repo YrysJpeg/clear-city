@@ -3,9 +3,7 @@
     <div class="container">
       <div class="my-account-row">
         <sidebar></sidebar>
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
+        <router-view></router-view>
       </div>
     </div>
   </div>

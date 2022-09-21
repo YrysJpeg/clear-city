@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       images: [],
-      files: ''
+      files: "",
     };
   },
   methods: {
@@ -49,14 +49,13 @@ export default {
         reader.readAsDataURL(files[i]);
       }
 
-      
       this.images = fileArr;
 
-      this.files = e.target.files
-      const formData = new FormData()
+      this.files = e.target.files;
+      const formData = new FormData();
       for (let i = 0; i < this.files.length; i++) {
-        let file = this.files[i]
-        formData.append('file', file);
+        let file = this.files[i];
+        formData.append("file", file);
       }
       console.log(formData);
 

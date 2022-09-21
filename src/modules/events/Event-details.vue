@@ -210,7 +210,7 @@
 </template>
 
 <script>
-import GoBack from '../core/back/Go-back.vue'
+import GoBack from "../core/back/Go-back.vue";
 import MapView from "../core/map/MapView.vue";
 export default {
   components: { MapView, GoBack },

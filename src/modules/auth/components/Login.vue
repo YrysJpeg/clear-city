@@ -16,10 +16,7 @@
           <input type="text" v-model="pass" v-if="passState" />
           <input type="password" v-model="pass" v-else />
           <button class="show-pass" @click="passState = !passState">
-            <img
-              src="../../../assets/img/showPass.svg"
-              alt=""
-            />
+            <img src="../../../assets/img/showPass.svg" alt="" />
           </button>
         </div>
       </div>
@@ -37,7 +34,7 @@ export default {
     return {
       phone: "",
       pass: "",
-      passState: false
+      passState: false,
     };
   },
   methods: {

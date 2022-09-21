@@ -6,7 +6,9 @@
         <div class="start-top__left">
           <h3>Сделаем Усть-Каменогорск чище вместе</h3>
           <p>
-            Наш сервис является помощником в подаче официальных обращений в государственные органы для решения городских проблем с мусором. Вам нужно только заполнить форму остальное мы сделаем за Вас. 
+            Наш сервис является помощником в подаче официальных обращений в
+            государственные органы для решения городских проблем с мусором. Вам
+            нужно только заполнить форму остальное мы сделаем за Вас.
           </p>
           <button class="notranslate" @click="close">
             {{ $t("main.create-appeals") }}
@@ -21,7 +23,7 @@
         <div class="start-bottom__head">
           <div>
             <input type="text" placeholder="Поиск" />
-            <img src="../../assets/img/search.svg" alt="">
+            <img src="../../assets/img/search.svg" alt="" />
           </div>
           <button class="search notranslate">{{ $t("main.find") }}</button>
           <button
@@ -119,7 +121,9 @@
         width="100"
         height="500"
       ></map-view>
-      <button @click="showMore" class="show-more notranslate">{{ $t("main.load-more") }}</button>
+      <button @click="showMore" class="show-more notranslate">
+        {{ $t("main.load-more") }}
+      </button>
     </div>
   </div>
 </template>
@@ -137,7 +141,7 @@ export default {
       form: false,
       events: "",
       state: false,
-      clickState: 0
+      clickState: 0,
     };
   },
   methods: {
@@ -145,8 +149,8 @@ export default {
       this.form = !this.form;
     },
     showMore() {
-      this.clickState += 1
-    }
+      this.clickState += 1;
+    },
   },
   computed: {
     getAllApplications() {
@@ -166,7 +170,7 @@ export default {
   color: #008037;
 }
 .start-bottom__head {
-  >div {
+  > div {
     position: relative;
 
     img {

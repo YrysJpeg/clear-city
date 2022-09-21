@@ -38,7 +38,14 @@ const EventDetails = () =>
   import(
     /* webpackChunkName: "event-details" */ "../modules/events/Event-details.vue"
   );
-
+const AppealEdit = () =>
+  import(
+    /* webpackChunkName: "appeal-edit" */ "../modules/account/MyAppealsEdti.vue"
+  );
+const EventEdit = () =>
+  import(
+    /* webpackChunkName: "event-edit" */ "../modules/account/MyEventEdit.vue"
+  );
 const routes = [
   {
     path: "/",
@@ -108,6 +115,16 @@ const routes = [
       {
         path: "my-visit",
         component: MyVisit,
+      },
+      {
+        path: "my-appeal-edit/:id",
+        name: "appeal-edit",
+        component: AppealEdit,
+      },
+      {
+        path: "my-event-edit/:id",
+        name: "event-edit",
+        component: EventEdit,
       },
     ],
   },
