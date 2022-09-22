@@ -34,8 +34,15 @@
                 </div>
               </div>
               <div @click="menuState = false">
-                <router-link to class="header-auth notranslate">{{
-                  $t("header.login")
+                <router-link
+                  v-if="!checkAuth"
+                  @click.native="openModal"
+                  to
+                  class="header-auth notranslate"
+                  >{{ $t("header.login") }}</router-link
+                >
+                <router-link v-else to="/account" class="header-auth notranslate">{{
+                  $t("header.account")
                 }}</router-link>
               </div>
             </div>
